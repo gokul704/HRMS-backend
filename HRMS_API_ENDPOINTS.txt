@@ -1,0 +1,670 @@
+================================================================================
+                           HRMS API ENDPOINTS COMPLETE LIST
+================================================================================
+
+Base URL: http://localhost:8000/api
+Authentication: Bearer Token (except for login)
+
+================================================================================
+                               1. AUTHENTICATION APIs
+================================================================================
+
+1. LOGIN
+   Method: POST
+   URL: http://localhost:8000/api/login
+   Headers:
+     Content-Type: application/json
+     Accept: application/json
+   Body:
+   {
+       "email": "sarah.johnson@company.com",
+       "password": "password123"
+   }
+
+2. LOGOUT
+   Method: POST
+   URL: http://localhost:8000/api/logout
+   Headers:
+     Authorization: Bearer {{TOKEN}}
+     Accept: application/json
+
+3. GET PROFILE
+   Method: GET
+   URL: http://localhost:8000/api/profile
+   Headers:
+     Authorization: Bearer {{TOKEN}}
+     Accept: application/json
+
+4. UPDATE PROFILE
+   Method: PUT
+   URL: http://localhost:8000/api/profile
+   Headers:
+     Authorization: Bearer {{TOKEN}}
+     Content-Type: application/json
+     Accept: application/json
+   Body:
+   {
+       "name": "Updated Name",
+       "email": "updated@email.com"
+   }
+
+5. CHECK AUTHENTICATION
+   Method: GET
+   URL: http://localhost:8000/api/check-auth
+   Headers:
+     Authorization: Bearer {{TOKEN}}
+     Accept: application/json
+
+================================================================================
+                             2. EMPLOYEE MANAGEMENT APIs
+================================================================================
+
+6. GET ALL EMPLOYEES
+   Method: GET
+   URL: http://localhost:8000/api/employees
+   Headers:
+     Authorization: Bearer {{TOKEN}}
+     Accept: application/json
+
+7. GET EMPLOYEES WITH FILTERS
+   Method: GET
+   URL: http://localhost:8000/api/employees?department_id=1&employment_status=active&search=john
+   Headers:
+     Authorization: Bearer {{TOKEN}}
+     Accept: application/json
+
+8. CREATE EMPLOYEE
+   Method: POST
+   URL: http://localhost:8000/api/employees
+   Headers:
+     Authorization: Bearer {{TOKEN}}
+     Content-Type: application/json
+     Accept: application/json
+   Body:
+   {
+       "first_name": "John",
+       "last_name": "Doe",
+       "email": "john.doe@company.com",
+       "phone": "+1234567890",
+       "date_of_birth": "1990-05-15",
+       "gender": "male",
+       "address": "123 Main St, City, State",
+       "emergency_contact_name": "Jane Doe",
+       "emergency_contact_phone": "+1234567891",
+       "position": "Software Developer",
+       "department_id": 2,
+       "hire_date": "2024-01-15",
+       "salary": 65000,
+       "employment_status": "active"
+   }
+
+9. GET EMPLOYEE DETAILS
+   Method: GET
+   URL: http://localhost:8000/api/employees/1
+   Headers:
+     Authorization: Bearer {{TOKEN}}
+     Accept: application/json
+
+10. UPDATE EMPLOYEE
+    Method: PUT
+    URL: http://localhost:8000/api/employees/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "first_name": "John Updated",
+        "last_name": "Doe Updated",
+        "phone": "+1234567899",
+        "position": "Senior Developer",
+        "salary": 75000
+    }
+
+11. DELETE EMPLOYEE (TERMINATE)
+    Method: DELETE
+    URL: http://localhost:8000/api/employees/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+12. COMPLETE EMPLOYEE ONBOARDING
+    Method: PATCH
+    URL: http://localhost:8000/api/employees/1/complete-onboarding
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+13. GET EMPLOYEE STATISTICS
+    Method: GET
+    URL: http://localhost:8000/api/employees/statistics
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+14. GET EMPLOYEES BY DEPARTMENT
+    Method: GET
+    URL: http://localhost:8000/api/departments/1/employees
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+================================================================================
+                           3. OFFER LETTER MANAGEMENT APIs
+================================================================================
+
+15. GET ALL OFFER LETTERS
+    Method: GET
+    URL: http://localhost:8000/api/offer-letters
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+16. GET OFFER LETTERS WITH FILTERS
+    Method: GET
+    URL: http://localhost:8000/api/offer-letters?status=draft&department_id=2&search=jane
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+17. CREATE OFFER LETTER
+    Method: POST
+    URL: http://localhost:8000/api/offer-letters
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "candidate_name": "Jane Smith",
+        "candidate_email": "jane.smith@email.com",
+        "candidate_phone": "+1234567891",
+        "position": "Senior Developer",
+        "department_id": 2,
+        "offered_salary": 75000,
+        "salary_currency": "USD",
+        "offer_date": "2024-01-15",
+        "joining_date": "2024-02-01",
+        "job_description": "Senior software development role with team leadership",
+        "benefits": "Health insurance, 401k, flexible hours",
+        "terms_and_conditions": "Standard company terms apply"
+    }
+
+18. GET OFFER LETTER DETAILS
+    Method: GET
+    URL: http://localhost:8000/api/offer-letters/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+19. UPDATE OFFER LETTER
+    Method: PUT
+    URL: http://localhost:8000/api/offer-letters/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "candidate_name": "Jane Smith Updated",
+        "offered_salary": 80000,
+        "benefits": "Updated benefits package"
+    }
+
+20. DELETE OFFER LETTER
+    Method: DELETE
+    URL: http://localhost:8000/api/offer-letters/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+21. SEND OFFER LETTER
+    Method: PATCH
+    URL: http://localhost:8000/api/offer-letters/1/send
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+22. APPROVE OFFER LETTER
+    Method: PATCH
+    URL: http://localhost:8000/api/offer-letters/1/approve
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "approved_by": 1
+    }
+
+23. UPDATE OFFER LETTER STATUS
+    Method: PATCH
+    URL: http://localhost:8000/api/offer-letters/1/update-status
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "status": "accepted",
+        "response_notes": "Candidate accepted the offer"
+    }
+
+24. GET OFFER LETTER STATISTICS
+    Method: GET
+    URL: http://localhost:8000/api/offer-letters/statistics
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+25. GET OFFER LETTERS BY DEPARTMENT
+    Method: GET
+    URL: http://localhost:8000/api/departments/1/offer-letters
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+================================================================================
+                             4. PAYROLL MANAGEMENT APIs
+================================================================================
+
+26. GET ALL PAYROLLS
+    Method: GET
+    URL: http://localhost:8000/api/payrolls
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+27. GET PAYROLLS WITH FILTERS
+    Method: GET
+    URL: http://localhost:8000/api/payrolls?employee_id=1&payment_status=pending&month=January&year=2024
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+28. CREATE PAYROLL
+    Method: POST
+    URL: http://localhost:8000/api/payrolls
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "employee_id": 1,
+        "month": "January",
+        "year": 2024,
+        "basic_salary": 5000,
+        "allowances": 500,
+        "bonus": 1000,
+        "overtime_pay": 200,
+        "tax_deduction": 800,
+        "insurance_deduction": 200,
+        "other_deductions": 100
+    }
+
+29. GET PAYROLL DETAILS
+    Method: GET
+    URL: http://localhost:8000/api/payrolls/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+30. UPDATE PAYROLL
+    Method: PUT
+    URL: http://localhost:8000/api/payrolls/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "basic_salary": 5500,
+        "allowances": 600,
+        "bonus": 1200
+    }
+
+31. DELETE PAYROLL
+    Method: DELETE
+    URL: http://localhost:8000/api/payrolls/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+32. MARK PAYROLL AS PAID
+    Method: PATCH
+    URL: http://localhost:8000/api/payrolls/1/mark-as-paid
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "payment_method": "Bank Transfer",
+        "payment_notes": "Payment processed successfully"
+    }
+
+33. MARK PAYROLL AS FAILED
+    Method: PATCH
+    URL: http://localhost:8000/api/payrolls/1/mark-as-failed
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "payment_notes": "Payment failed due to insufficient funds"
+    }
+
+34. GET PAYROLL STATISTICS
+    Method: GET
+    URL: http://localhost:8000/api/payrolls/statistics
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+35. GET PAYROLLS BY EMPLOYEE
+    Method: GET
+    URL: http://localhost:8000/api/employees/1/payrolls
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+36. GENERATE BULK PAYROLL
+    Method: POST
+    URL: http://localhost:8000/api/payrolls/generate-bulk
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "month": "February",
+        "year": 2024
+    }
+
+================================================================================
+                             5. DEPARTMENT MANAGEMENT APIs
+================================================================================
+
+37. GET ALL DEPARTMENTS
+    Method: GET
+    URL: http://localhost:8000/api/departments
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+38. GET DEPARTMENTS WITH FILTERS
+    Method: GET
+    URL: http://localhost:8000/api/departments?is_active=true&search=tech
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+39. CREATE DEPARTMENT
+    Method: POST
+    URL: http://localhost:8000/api/departments
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "name": "Product Management",
+        "description": "Product strategy and roadmap management",
+        "location": "Product Suite",
+        "is_active": true
+    }
+
+40. GET DEPARTMENT DETAILS
+    Method: GET
+    URL: http://localhost:8000/api/departments/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+41. UPDATE DEPARTMENT
+    Method: PUT
+    URL: http://localhost:8000/api/departments/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Content-Type: application/json
+      Accept: application/json
+    Body:
+    {
+        "name": "Updated Department Name",
+        "description": "Updated description",
+        "location": "Updated Location"
+    }
+
+42. DELETE DEPARTMENT
+    Method: DELETE
+    URL: http://localhost:8000/api/departments/1
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+43. GET DEPARTMENT STATISTICS
+    Method: GET
+    URL: http://localhost:8000/api/departments/1/statistics
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+44. GET DEPARTMENTS WITH EMPLOYEE COUNT
+    Method: GET
+    URL: http://localhost:8000/api/departments-with-employee-count
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+45. TOGGLE DEPARTMENT STATUS
+    Method: PATCH
+    URL: http://localhost:8000/api/departments/1/toggle-status
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+================================================================================
+                             6. DASHBOARD & STATISTICS APIs
+================================================================================
+
+46. DASHBOARD STATISTICS (HR/Manager)
+    Method: GET
+    URL: http://localhost:8000/api/dashboard/statistics
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+47. MANAGER APPROVALS
+    Method: GET
+    URL: http://localhost:8000/api/manager/approvals
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+48. EMPLOYEE PROFILE (Employee Role)
+    Method: GET
+    URL: http://localhost:8000/api/employee/profile
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+49. EMPLOYEE PAYROLLS (Employee Role)
+    Method: GET
+    URL: http://localhost:8000/api/employee/payrolls
+    Headers:
+      Authorization: Bearer {{TOKEN}}
+      Accept: application/json
+
+================================================================================
+                             7. TESTING USER ROLES
+================================================================================
+
+HR USER TESTING:
+   Login: sarah.johnson@company.com / password123
+   Role: hr
+   Access: Full access to all features
+
+MANAGER USER TESTING:
+   Login: michael.chen@company.com / password123
+   Role: manager
+   Access: Limited access, can approve offers
+
+EMPLOYEE USER TESTING:
+   Login: david.wilson@company.com / password123
+   Role: employee
+   Access: View own profile and payroll
+
+================================================================================
+                             8. POSTMAN ENVIRONMENT SETUP
+================================================================================
+
+Environment Variables:
+   BASE_URL: http://localhost:8000/api
+   TOKEN: (leave empty initially)
+   USER_ID: (leave empty initially)
+
+Postman Test Script for Login (to auto-save token):
+   if (pm.response.code === 200) {
+       const response = pm.response.json();
+       if (response.success) {
+           pm.environment.set("TOKEN", response.data.token);
+           pm.environment.set("USER_ID", response.data.user.id);
+           console.log("Token saved:", response.data.token);
+       }
+   }
+
+================================================================================
+                             9. EXPECTED RESPONSE FORMAT
+================================================================================
+
+Success Response:
+{
+    "success": true,
+    "message": "Operation successful",
+    "data": {
+        // Response data
+    }
+}
+
+Error Response:
+{
+    "success": false,
+    "message": "Error description",
+    "errors": {
+        // Validation errors
+    }
+}
+
+HTTP Status Codes:
+   200 - Success
+   201 - Created
+   400 - Bad Request
+   401 - Unauthorized
+   403 - Forbidden
+   404 - Not Found
+   422 - Validation Error
+   500 - Server Error
+
+================================================================================
+                             10. TESTING CHECKLIST
+================================================================================
+
+AUTHENTICATION:
+   [ ] Login with valid credentials
+   [ ] Login with invalid credentials
+   [ ] Get profile with token
+   [ ] Logout
+
+EMPLOYEE MANAGEMENT:
+   [ ] Get all employees
+   [ ] Create new employee
+   [ ] Update employee
+   [ ] Complete onboarding
+   [ ] Employee statistics
+
+OFFER LETTERS:
+   [ ] Get all offer letters
+   [ ] Create offer letter
+   [ ] Send offer letter
+   [ ] Update status
+   [ ] Offer statistics
+
+PAYROLL:
+   [ ] Get all payrolls
+   [ ] Create payroll
+   [ ] Mark as paid
+   [ ] Generate bulk payroll
+   [ ] Payroll statistics
+
+DEPARTMENTS:
+   [ ] Get all departments
+   [ ] Create department
+   [ ] Update department
+   [ ] Department statistics
+
+ROLE TESTING:
+   [ ] Test HR access
+   [ ] Test Manager access
+   [ ] Test Employee access
+
+================================================================================
+                             11. COMMON TESTING SCENARIOS
+================================================================================
+
+1. COMPLETE EMPLOYEE LIFECYCLE:
+   - Create employee
+   - Complete onboarding
+   - Create payroll
+   - Mark payroll as paid
+
+2. OFFER LETTER WORKFLOW:
+   - Create offer letter
+   - Send offer letter
+   - Update status to accepted
+   - Create employee from accepted offer
+
+3. ROLE-BASED ACCESS:
+   - Test each role with appropriate endpoints
+   - Verify access restrictions
+
+4. ERROR HANDLING:
+   - Test with invalid data
+   - Test with missing authentication
+   - Test with insufficient permissions
+
+================================================================================
+                             12. TROUBLESHOOTING
+================================================================================
+
+Common Issues:
+1. "getaddrinfo ENOTFOUND" - Check if Laravel server is running
+2. "401 Unauthorized" - Check if token is valid
+3. "403 Forbidden" - Check user role permissions
+4. "422 Validation Error" - Check request body format
+
+Server Commands:
+   php artisan serve (start server)
+   php artisan migrate:fresh --seed (reset database)
+   php test_api.php (run test script)
+
+================================================================================
+                             13. API SUMMARY
+================================================================================
+
+Total APIs: 49
+Categories: 6
+- Authentication: 5 APIs
+- Employee Management: 9 APIs
+- Offer Letter Management: 11 APIs
+- Payroll Management: 11 APIs
+- Department Management: 9 APIs
+- Dashboard & Statistics: 4 APIs
+
+================================================================================
+                              END OF API LIST
+================================================================================
+
+This file contains all 49 API endpoints for the HRMS system.
+Use this as a reference for Postman testing and API integration.
