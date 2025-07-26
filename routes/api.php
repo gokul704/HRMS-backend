@@ -8,16 +8,44 @@ use App\Http\Controllers\Api\OfferLetterController;
 use App\Http\Controllers\Api\PayrollController;
 use App\Http\Controllers\Api\DepartmentController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+// Test endpoint to fix database
+Route::get('/test-db', function () {
+    try {
+        // Check database connection
+        DB::connection()->getPdo();
+
+        // Check if users exist
+        $userCount = \App\Models\User::count();
+        $deptCount = \App\Models\Department::count();
+
+        if ($userCount == 0) {
+            // Run seeders
+            \Artisan::call('db:seed', ['--force' => true]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Database seeded successfully',
+                'data' => [
+                    'users_created' => \App\Models\User::count(),
+                    'departments_created' => \App\Models\Department::count()
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'Database already has data',
+                'data' => [
+                    'users' => $userCount,
+                    'departments' => $deptCount
+                ]
+            ]);
+        }
+    } catch (Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Database error: ' . $e->getMessage()
+        ], 500);
+    }
+});
 
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);

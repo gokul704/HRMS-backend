@@ -23,6 +23,15 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+        // Debug information
+        \Log::info('Login attempt', [
+            'email' => $request->email,
+            'user_found' => $user ? 'YES' : 'NO',
+            'user_id' => $user ? $user->id : null,
+            'user_active' => $user ? $user->is_active : null,
+            'password_check' => $user ? Hash::check($request->password, $user->password) : 'N/A'
+        ]);
+
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],

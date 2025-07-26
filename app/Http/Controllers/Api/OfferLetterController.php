@@ -20,7 +20,7 @@ class OfferLetterController extends Controller
         // Filter by status
         if ($request->has('status')) {
             $query->where('status', $request->status);
-        }
+    }
 
         // Filter by department
         if ($request->has('department_id')) {
