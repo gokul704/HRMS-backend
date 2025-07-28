@@ -5,7 +5,7 @@
 @section('page-title', 'Departments')
 
 @section('page-actions')
-<a href="{{ route('departments.create') }}" class="btn btn-primary">
+<a href="{{ route('web.departments.create') }}" class="btn btn-primary">
     <i class="fas fa-plus me-2"></i>
     Add Department
 </a>
@@ -59,22 +59,22 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="{{ route('departments.show', $department) }}"
+                                                                        <a href="{{ route('web.departments.show', $department) }}"
                                        class="btn btn-sm btn-outline-primary"
                                        title="View">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('departments.edit', $department) }}"
+                                    <a href="{{ route('web.departments.edit', $department) }}"
                                        class="btn btn-sm btn-outline-warning"
                                        title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('departments.statistics', $department) }}"
+                                    <a href="{{ route('web.departments.statistics', $department) }}"
                                        class="btn btn-sm btn-outline-info"
                                        title="Statistics">
                                         <i class="fas fa-chart-bar"></i>
                                     </a>
-                                    <form method="POST" action="{{ route('departments.toggle-status', $department) }}"
+                                    <form method="POST" action="{{ route('web.departments.toggle-status', $department) }}"
                                           class="d-inline">
                                         @csrf
                                         @method('PATCH')
@@ -83,7 +83,7 @@
                                             <i class="fas fa-{{ $department->is_active ? 'pause' : 'play' }}"></i>
                                         </button>
                                     </form>
-                                    <form method="POST" action="{{ route('departments.destroy', $department) }}"
+                                    <form method="POST" action="{{ route('web.departments.destroy', $department) }}"
                                           class="d-inline"
                                           onsubmit="return confirm('Are you sure you want to delete this department?')">
                                         @csrf
@@ -110,7 +110,7 @@
                 <i class="fas fa-building fa-3x text-muted mb-3"></i>
                 <h5 class="text-muted">No Departments Found</h5>
                 <p class="text-muted">Get started by creating your first department.</p>
-                <a href="{{ route('departments.create') }}" class="btn btn-primary">
+                <a href="{{ route('web.departments.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus me-2"></i>
                     Create Department
                 </a>

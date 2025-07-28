@@ -95,38 +95,38 @@
                         </li>
 
                         @if(auth()->user()->isHr() || auth()->user()->isManager())
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('departments*') ? 'active' : '' }}" href="{{ route('departments.index') }}">
+                                                <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('web.departments*') ? 'active' : '' }}" href="{{ route('web.departments.index') }}">
                                 <i class="fas fa-building"></i>
                                 Departments
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('employees*') ? 'active' : '' }}" href="{{ route('employees.index') }}">
+                            <a class="nav-link {{ request()->routeIs('web.employees*') ? 'active' : '' }}" href="{{ route('web.employees.index') }}">
                                 <i class="fas fa-users"></i>
                                 Employees
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('offer-letters*') ? 'active' : '' }}" href="{{ route('offer-letters.index') }}">
+                            <a class="nav-link {{ request()->routeIs('web.offer-letters*') ? 'active' : '' }}" href="{{ route('web.offer-letters.index') }}">
                                 <i class="fas fa-file-contract"></i>
                                 Offer Letters
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('payrolls*') ? 'active' : '' }}" href="{{ route('payrolls.index') }}">
+                            <a class="nav-link {{ request()->routeIs('web.payrolls*') ? 'active' : '' }}" href="{{ route('web.payrolls.index') }}">
                                 <i class="fas fa-money-bill-wave"></i>
                                 Payroll
                             </a>
                         </li>
                         @endif
 
-                        @if(auth()->user()->isManager())
+                                                @if(auth()->user()->isManager())
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('manager.approvals') ? 'active' : '' }}" href="{{ route('manager.approvals') }}">
+                            <a class="nav-link {{ request()->routeIs('web.manager.approvals') ? 'active' : '' }}" href="{{ route('web.manager.approvals') }}">
                                 <i class="fas fa-check-circle"></i>
                                 Approvals
                             </a>
@@ -135,14 +135,14 @@
 
                         @if(auth()->user()->isEmployee())
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('employee.profile') ? 'active' : '' }}" href="{{ route('employee.profile') }}">
+                            <a class="nav-link {{ request()->routeIs('web.employee.profile') ? 'active' : '' }}" href="{{ route('web.employee.profile') }}">
                                 <i class="fas fa-user"></i>
                                 My Profile
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('employee.payrolls') ? 'active' : '' }}" href="{{ route('employee.payrolls') }}">
+                            <a class="nav-link {{ request()->routeIs('web.employee.payrolls') ? 'active' : '' }}" href="{{ route('web.employee.payrolls') }}">
                                 <i class="fas fa-money-bill"></i>
                                 My Payrolls
                             </a>

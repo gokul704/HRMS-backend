@@ -149,25 +149,25 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <a href="{{ route('employees.create') }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ route('web.employees.create') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-user-plus me-2"></i>
                             Add Employee
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="{{ route('departments.create') }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ route('web.departments.create') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-building me-2"></i>
                             Add Department
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="{{ route('offer-letters.create') }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ route('web.offer-letters.create') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-file-contract me-2"></i>
                             Create Offer
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="{{ route('payrolls.create') }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ route('web.payrolls.create') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-money-bill me-2"></i>
                             Process Payroll
                         </a>
@@ -217,11 +217,11 @@
                     <div class="col-md-6">
                         <h6 class="text-muted mb-3">Quick Links</h6>
                         <div class="d-grid gap-2">
-                            <a href="{{ route('employee.profile') }}" class="btn btn-outline-primary">
+                            <a href="{{ route('web.employee.profile') }}" class="btn btn-outline-primary">
                                 <i class="fas fa-user me-2"></i>
                                 View My Profile
                             </a>
-                            <a href="{{ route('employee.payrolls') }}" class="btn btn-outline-primary">
+                            <a href="{{ route('web.employee.payrolls') }}" class="btn btn-outline-primary">
                                 <i class="fas fa-money-bill me-2"></i>
                                 View My Payrolls
                             </a>

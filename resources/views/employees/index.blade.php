@@ -5,7 +5,7 @@
 @section('page-title', 'Employees')
 
 @section('page-actions')
-<a href="{{ route('employees.create') }}" class="btn btn-primary">
+<a href="{{ route('web.employees.create') }}" class="btn btn-primary">
     <i class="fas fa-user-plus me-2"></i>
     Add Employee
 </a>
@@ -73,18 +73,18 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="{{ route('employees.show', $employee) }}"
+                                                                        <a href="{{ route('web.employees.show', $employee) }}"
                                        class="btn btn-sm btn-outline-primary"
                                        title="View">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('employees.edit', $employee) }}"
+                                    <a href="{{ route('web.employees.edit', $employee) }}"
                                        class="btn btn-sm btn-outline-warning"
                                        title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     @if(!$employee->is_onboarded)
-                                        <form method="POST" action="{{ route('employees.complete-onboarding', $employee) }}"
+                                        <form method="POST" action="{{ route('web.employees.complete-onboarding', $employee) }}"
                                               class="d-inline">
                                             @csrf
                                             @method('PATCH')
@@ -94,7 +94,7 @@
                                             </button>
                                         </form>
                                     @endif
-                                    <form method="POST" action="{{ route('employees.destroy', $employee) }}"
+                                    <form method="POST" action="{{ route('web.employees.destroy', $employee) }}"
                                           class="d-inline"
                                           onsubmit="return confirm('Are you sure you want to delete this employee?')">
                                         @csrf
@@ -121,7 +121,7 @@
                 <i class="fas fa-users fa-3x text-muted mb-3"></i>
                 <h5 class="text-muted">No Employees Found</h5>
                 <p class="text-muted">Get started by adding your first employee.</p>
-                <a href="{{ route('employees.create') }}" class="btn btn-primary">
+                <a href="{{ route('web.employees.create') }}" class="btn btn-primary">
                     <i class="fas fa-user-plus me-2"></i>
                     Add Employee
                 </a>
