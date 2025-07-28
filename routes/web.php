@@ -20,6 +20,15 @@ use App\Http\Controllers\Web\ProfileController;
 |
 */
 
+// Health check route
+Route::get('/health', function () {
+    return response()->json([
+        'status' => 'ok',
+        'message' => 'HRMS Application is running',
+        'timestamp' => now()
+    ]);
+});
+
 // Public routes
 Route::get('/', function () {
     return view('welcome');
