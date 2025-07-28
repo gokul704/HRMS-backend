@@ -21,9 +21,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Handle database connection failures gracefully
+        // Completely bypass database connection during startup
+        // This will allow the application to start without database
         try {
-            DB::connection()->getPdo();
+            // Only test connection if we're not in a web request
+            if (!request()->is('health')) {
+                DB::connection()->getPdo();
+            }
         } catch (\Exception $e) {
             Log::warning('Database connection failed: ' . $e->getMessage());
             // Continue without database connection

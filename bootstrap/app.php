@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckRole::class,
         ]);
+
+        // Add database connection middleware globally
+        $middleware->append(\App\Http\Middleware\HandleDatabaseConnection::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
