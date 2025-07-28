@@ -1,0 +1,840 @@
+{
+  "base_url": "https://hrms-backend-production-2e6d.up.railway.app/api",
+  "total_endpoints": 46,
+  "endpoints": {
+    "public": {
+      "count": 1,
+      "endpoints": [
+        {
+          "id": 1,
+          "name": "Login",
+          "method": "POST",
+          "url": "/login",
+          "headers": {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          "body": {
+            "email": "gokul.kumar.dev@company.com",
+            "password": "password123"
+          },
+          "description": "Authenticate user and get access token"
+        }
+      ]
+    },
+    "protected": {
+      "count": 45,
+      "categories": {
+        "authentication": {
+          "count": 4,
+          "endpoints": [
+            {
+              "id": 2,
+              "name": "Logout",
+              "method": "POST",
+              "url": "/logout",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Logout user and invalidate token"
+            },
+            {
+              "id": 3,
+              "name": "Get Profile",
+              "method": "GET",
+              "url": "/profile",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get current user profile"
+            },
+            {
+              "id": 4,
+              "name": "Update Profile",
+              "method": "PUT",
+              "url": "/profile",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "name": "Updated Name",
+                "email": "updated@email.com"
+              },
+              "description": "Update current user profile"
+            },
+            {
+              "id": 5,
+              "name": "Check Authentication",
+              "method": "GET",
+              "url": "/check-auth",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Verify if user is authenticated"
+            }
+          ]
+        },
+        "departments": {
+          "count": 8,
+          "endpoints": [
+            {
+              "id": 6,
+              "name": "List All Departments",
+              "method": "GET",
+              "url": "/departments",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get paginated list of all departments"
+            },
+            {
+              "id": 7,
+              "name": "Get Specific Department",
+              "method": "GET",
+              "url": "/departments/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get specific department by ID"
+            },
+            {
+              "id": 8,
+              "name": "Create Department",
+              "method": "POST",
+              "url": "/departments",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "name": "New Department",
+                "description": "Department description",
+                "location": "Building A",
+                "is_active": true
+              },
+              "description": "Create a new department"
+            },
+            {
+              "id": 9,
+              "name": "Update Department",
+              "method": "PUT",
+              "url": "/departments/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "name": "Updated Department",
+                "description": "Updated description",
+                "location": "Building B",
+                "is_active": true
+              },
+              "description": "Update existing department"
+            },
+            {
+              "id": 10,
+              "name": "Delete Department",
+              "method": "DELETE",
+              "url": "/departments/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Delete department by ID"
+            },
+            {
+              "id": 11,
+              "name": "Department Statistics",
+              "method": "GET",
+              "url": "/departments/{id}/statistics",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get statistics for specific department"
+            },
+            {
+              "id": 12,
+              "name": "Departments with Employee Count",
+              "method": "GET",
+              "url": "/departments-with-employee-count",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get departments with employee count"
+            },
+            {
+              "id": 13,
+              "name": "Toggle Department Status",
+              "method": "PATCH",
+              "url": "/departments/{id}/toggle-status",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Toggle department active status"
+            }
+          ]
+        },
+        "employees": {
+          "count": 8,
+          "endpoints": [
+            {
+              "id": 14,
+              "name": "List All Employees",
+              "method": "GET",
+              "url": "/employees",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get paginated list of all employees"
+            },
+            {
+              "id": 15,
+              "name": "Get Specific Employee",
+              "method": "GET",
+              "url": "/employees/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get specific employee by ID"
+            },
+            {
+              "id": 16,
+              "name": "Create Employee",
+              "method": "POST",
+              "url": "/employees",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "user_id": 1,
+                "department_id": 1,
+                "employee_id": "EMP001",
+                "first_name": "John",
+                "last_name": "Doe",
+                "phone": "+1234567890",
+                "date_of_birth": "1990-01-01",
+                "gender": "male",
+                "address": "123 Main St",
+                "emergency_contact_name": "Jane Doe",
+                "emergency_contact_phone": "+1234567891",
+                "position": "Software Developer",
+                "hire_date": "2023-01-01",
+                "salary": 65000.00,
+                "employment_status": "active",
+                "is_onboarded": false
+              },
+              "description": "Create a new employee"
+            },
+            {
+              "id": 17,
+              "name": "Update Employee",
+              "method": "PUT",
+              "url": "/employees/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "first_name": "Updated First Name",
+                "last_name": "Updated Last Name",
+                "position": "Senior Developer",
+                "salary": 75000.00
+              },
+              "description": "Update existing employee"
+            },
+            {
+              "id": 18,
+              "name": "Delete Employee",
+              "method": "DELETE",
+              "url": "/employees/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Delete employee by ID"
+            },
+            {
+              "id": 19,
+              "name": "Complete Employee Onboarding",
+              "method": "PATCH",
+              "url": "/employees/{id}/complete-onboarding",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Mark employee onboarding as complete"
+            },
+            {
+              "id": 20,
+              "name": "Employee Statistics",
+              "method": "GET",
+              "url": "/employees/statistics",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get employee statistics"
+            },
+            {
+              "id": 21,
+              "name": "Employees by Department",
+              "method": "GET",
+              "url": "/departments/{id}/employees",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get employees by department"
+            }
+          ]
+        },
+        "offer_letters": {
+          "count": 10,
+          "endpoints": [
+            {
+              "id": 22,
+              "name": "List All Offer Letters",
+              "method": "GET",
+              "url": "/offer-letters",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get paginated list of all offer letters"
+            },
+            {
+              "id": 23,
+              "name": "Get Specific Offer Letter",
+              "method": "GET",
+              "url": "/offer-letters/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get specific offer letter by ID"
+            },
+            {
+              "id": 24,
+              "name": "Create Offer Letter",
+              "method": "POST",
+              "url": "/offer-letters",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "candidate_name": "John Doe",
+                "candidate_email": "john.doe@email.com",
+                "candidate_phone": "+1234567890",
+                "department_id": 1,
+                "position": "Software Developer",
+                "salary": 65000.00,
+                "start_date": "2024-01-15",
+                "offer_terms": "Full-time position with benefits",
+                "status": "draft"
+              },
+              "description": "Create a new offer letter"
+            },
+            {
+              "id": 25,
+              "name": "Update Offer Letter",
+              "method": "PUT",
+              "url": "/offer-letters/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "candidate_name": "Updated Name",
+                "position": "Senior Developer",
+                "salary": 75000.00,
+                "status": "sent"
+              },
+              "description": "Update existing offer letter"
+            },
+            {
+              "id": 26,
+              "name": "Delete Offer Letter",
+              "method": "DELETE",
+              "url": "/offer-letters/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Delete offer letter by ID"
+            },
+            {
+              "id": 27,
+              "name": "Send Offer Letter",
+              "method": "PATCH",
+              "url": "/offer-letters/{id}/send",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Send offer letter to candidate"
+            },
+            {
+              "id": 28,
+              "name": "Approve Offer Letter",
+              "method": "PATCH",
+              "url": "/offer-letters/{id}/approve",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Approve offer letter"
+            },
+            {
+              "id": 29,
+              "name": "Update Offer Letter Status",
+              "method": "PATCH",
+              "url": "/offer-letters/{id}/update-status",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "status": "accepted"
+              },
+              "description": "Update offer letter status"
+            },
+            {
+              "id": 30,
+              "name": "Offer Letter Statistics",
+              "method": "GET",
+              "url": "/offer-letters/statistics",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get offer letter statistics"
+            },
+            {
+              "id": 31,
+              "name": "Offer Letters by Department",
+              "method": "GET",
+              "url": "/departments/{id}/offer-letters",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get offer letters by department"
+            }
+          ]
+        },
+        "payrolls": {
+          "count": 10,
+          "endpoints": [
+            {
+              "id": 32,
+              "name": "List All Payrolls",
+              "method": "GET",
+              "url": "/payrolls",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get paginated list of all payrolls"
+            },
+            {
+              "id": 33,
+              "name": "Get Specific Payroll",
+              "method": "GET",
+              "url": "/payrolls/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get specific payroll by ID"
+            },
+            {
+              "id": 34,
+              "name": "Create Payroll",
+              "method": "POST",
+              "url": "/payrolls",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "employee_id": 1,
+                "payroll_period": "2024-01",
+                "basic_salary": 5000.00,
+                "allowances": 500.00,
+                "deductions": 200.00,
+                "net_salary": 5300.00,
+                "payment_status": "pending"
+              },
+              "description": "Create a new payroll"
+            },
+            {
+              "id": 35,
+              "name": "Update Payroll",
+              "method": "PUT",
+              "url": "/payrolls/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "basic_salary": 5500.00,
+                "allowances": 600.00,
+                "deductions": 250.00,
+                "net_salary": 5850.00
+              },
+              "description": "Update existing payroll"
+            },
+            {
+              "id": 36,
+              "name": "Delete Payroll",
+              "method": "DELETE",
+              "url": "/payrolls/{id}",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Delete payroll by ID"
+            },
+            {
+              "id": 37,
+              "name": "Mark Payroll as Paid",
+              "method": "PATCH",
+              "url": "/payrolls/{id}/mark-as-paid",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Mark payroll as paid"
+            },
+            {
+              "id": 38,
+              "name": "Mark Payroll as Failed",
+              "method": "PATCH",
+              "url": "/payrolls/{id}/mark-as-failed",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Mark payroll as failed"
+            },
+            {
+              "id": 39,
+              "name": "Payroll Statistics",
+              "method": "GET",
+              "url": "/payrolls/statistics",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get payroll statistics"
+            },
+            {
+              "id": 40,
+              "name": "Payrolls by Employee",
+              "method": "GET",
+              "url": "/employees/{id}/payrolls",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get payrolls by employee"
+            },
+            {
+              "id": 41,
+              "name": "Generate Bulk Payrolls",
+              "method": "POST",
+              "url": "/payrolls/generate-bulk",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              "body": {
+                "payroll_period": "2024-01",
+                "department_id": 1
+              },
+              "description": "Generate bulk payrolls for department"
+            }
+          ]
+        },
+        "hr_manager": {
+          "count": 1,
+          "endpoints": [
+            {
+              "id": 42,
+              "name": "Dashboard Statistics",
+              "method": "GET",
+              "url": "/dashboard/statistics",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get dashboard statistics (HR & Manager only)",
+              "access": ["hr", "manager"]
+            }
+          ]
+        },
+        "manager_only": {
+          "count": 1,
+          "endpoints": [
+            {
+              "id": 43,
+              "name": "Manager Approvals",
+              "method": "GET",
+              "url": "/manager/approvals",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get pending approvals (Manager only)",
+              "access": ["manager"]
+            }
+          ]
+        },
+        "employee_only": {
+          "count": 2,
+          "endpoints": [
+            {
+              "id": 44,
+              "name": "Employee Profile",
+              "method": "GET",
+              "url": "/employee/profile",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get current employee profile (Employee only)",
+              "access": ["employee"]
+            },
+            {
+              "id": 45,
+              "name": "Employee Payrolls",
+              "method": "GET",
+              "url": "/employee/payrolls",
+              "headers": {
+                "Authorization": "Bearer {token}",
+                "Accept": "application/json"
+              },
+              "description": "Get current employee payrolls (Employee only)",
+              "access": ["employee"]
+            }
+          ]
+        },
+        "test": {
+          "count": 1,
+          "endpoints": [
+            {
+              "id": 46,
+              "name": "Test Database",
+              "method": "GET",
+              "url": "/test-db",
+              "headers": {
+                "Accept": "application/json"
+              },
+              "description": "Test database status and seed if needed"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "role_based_access": {
+    "hr": {
+      "description": "Human Resources - Full administrative access",
+      "endpoints": [
+        "All authentication endpoints",
+        "All department endpoints",
+        "All employee endpoints",
+        "All offer letter endpoints",
+        "All payroll endpoints",
+        "Dashboard statistics"
+      ]
+    },
+    "manager": {
+      "description": "Department/Team Manager - Full administrative access + approvals",
+      "endpoints": [
+        "All authentication endpoints",
+        "All department endpoints",
+        "All employee endpoints",
+        "All offer letter endpoints",
+        "All payroll endpoints",
+        "Dashboard statistics",
+        "Manager approvals"
+      ]
+    },
+    "employee": {
+      "description": "Regular Employee - Limited access + personal data",
+      "endpoints": [
+        "All authentication endpoints",
+        "All department endpoints (read)",
+        "All employee endpoints (read)",
+        "All offer letter endpoints (read)",
+        "All payroll endpoints (read)",
+        "Personal employee profile",
+        "Personal payroll history"
+      ]
+    }
+  },
+  "test_users": {
+    "hr": [
+      {
+        "email": "gokul.kumar@company.com",
+        "password": "password123",
+        "role": "hr",
+        "position": "HR Director"
+      },
+      {
+        "email": "vardhan.sharma@company.com",
+        "password": "password123",
+        "role": "hr",
+        "position": "HR Specialist"
+      },
+      {
+        "email": "gokul.patel@company.com",
+        "password": "password123",
+        "role": "hr",
+        "position": "HR Assistant"
+      }
+    ],
+    "manager": [
+      {
+        "email": "vardhan.kumar@company.com",
+        "password": "password123",
+        "role": "manager",
+        "position": "IT Manager"
+      },
+      {
+        "email": "gokul.reddy@company.com",
+        "password": "password123",
+        "role": "manager",
+        "position": "Finance Manager"
+      },
+      {
+        "email": "vardhan.sharma.marketing@company.com",
+        "password": "password123",
+        "role": "manager",
+        "position": "Marketing Manager"
+      },
+      {
+        "email": "gokul.patel.sales@company.com",
+        "password": "password123",
+        "role": "manager",
+        "position": "Sales Manager"
+      },
+      {
+        "email": "vardhan.reddy@company.com",
+        "password": "password123",
+        "role": "manager",
+        "position": "Operations Manager"
+      }
+    ],
+    "employee": [
+      {
+        "email": "gokul.kumar.dev@company.com",
+        "password": "password123",
+        "role": "employee",
+        "position": "Software Developer"
+      },
+      {
+        "email": "vardhan.sharma.qa@company.com",
+        "password": "password123",
+        "role": "employee",
+        "position": "QA Tester"
+      },
+      {
+        "email": "gokul.patel.finance@company.com",
+        "password": "password123",
+        "role": "employee",
+        "position": "Accountant"
+      },
+      {
+        "email": "vardhan.kumar.marketing@company.com",
+        "password": "password123",
+        "role": "employee",
+        "position": "Marketing Specialist"
+      },
+      {
+        "email": "gokul.reddy.sales@company.com",
+        "password": "password123",
+        "role": "employee",
+        "position": "Sales Representative"
+      },
+      {
+        "email": "vardhan.sharma.ops@company.com",
+        "password": "password123",
+        "role": "employee",
+        "position": "Operations Coordinator"
+      },
+      {
+        "email": "gokul.kumar.support@company.com",
+        "password": "password123",
+        "role": "employee",
+        "position": "Customer Support Specialist"
+      }
+    ]
+  },
+  "response_formats": {
+    "success": {
+      "success": true,
+      "message": "Operation successful",
+      "data": {}
+    },
+    "error": {
+      "success": false,
+      "message": "Error message",
+      "errors": {
+        "field": ["Error details"]
+      }
+    },
+    "paginated": {
+      "success": true,
+      "data": {
+        "current_page": 1,
+        "data": [],
+        "first_page_url": "...",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "...",
+        "links": [],
+        "next_page_url": null,
+        "path": "...",
+        "per_page": 15,
+        "prev_page_url": null,
+        "to": 10,
+        "total": 10
+      }
+    }
+  },
+  "notes": [
+    "Base URL: All endpoints are prefixed with /api",
+    "Authentication: Use the token received from login in the Authorization header",
+    "Content-Type: Use application/json for POST/PUT requests",
+    "Accept: Use application/json for all requests",
+    "Error Handling: All endpoints return consistent error formats",
+    "Pagination: List endpoints support pagination with query parameters",
+    "Filtering: Many endpoints support filtering and search parameters"
+  ]
+}
