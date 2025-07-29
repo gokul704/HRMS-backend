@@ -29,6 +29,30 @@ Route::get('/health', function () {
     ]);
 });
 
+// Database test route
+Route::get('/test-db', function () {
+    try {
+        $pdo = DB::connection()->getPdo();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Database connection successful',
+            'database' => $pdo->getAttribute(PDO::ATTR_SERVER_VERSION),
+            'connection' => config('database.default'),
+            'host' => config('database.connections.mysql.host'),
+            'database_name' => config('database.connections.mysql.database'),
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Database connection failed',
+            'error' => $e->getMessage(),
+            'connection' => config('database.default'),
+            'host' => config('database.connections.mysql.host'),
+            'database_name' => config('database.connections.mysql.database'),
+        ], 500);
+    }
+});
+
 // Public routes
 Route::get('/', function () {
     return view('welcome');
