@@ -5,6 +5,12 @@ if [ -z "$APP_KEY" ]; then
     php artisan key:generate
 fi
 
+# Parse DATABASE_URL if provided and set individual variables
+if [ ! -z "$DATABASE_URL" ]; then
+    echo "Parsing DATABASE_URL..."
+    php parse_railway_db.php
+fi
+
 # Clear and cache config
 php artisan config:clear
 php artisan config:cache

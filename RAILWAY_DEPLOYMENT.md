@@ -24,6 +24,7 @@ LOG_CHANNEL=stack
 LOG_LEVEL=error
 
 DB_CONNECTION=mysql
+DATABASE_URL=mysql://your_username:your_password@your-db-host.railway.app:3306/your_database_name
 DB_HOST=your-db-host.railway.app
 DB_PORT=3306
 DB_DATABASE=your_database_name
