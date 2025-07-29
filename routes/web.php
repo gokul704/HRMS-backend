@@ -53,6 +53,18 @@ Route::get('/test-db', function () {
     }
 });
 
+// Comprehensive database diagnostic route
+Route::get('/diagnose-db', function () {
+    ob_start();
+    include base_path('diagnose-db.php');
+    $output = ob_get_clean();
+
+    return response()->json([
+        'status' => 'diagnostic_complete',
+        'output' => $output
+    ]);
+});
+
 // Public routes
 Route::get('/', function () {
     return view('welcome');

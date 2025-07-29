@@ -103,6 +103,10 @@ echo "DB_USERNAME: $DB_USERNAME"
 echo "DB_PASSWORD: ${DB_PASSWORD:0:10}..."
 echo "==================================="
 
+# Run comprehensive database diagnostic
+echo "=== Running Database Diagnostic ==="
+php diagnose-db.php
+
 # Test database connection
 echo "=== Testing Database Connection ==="
 php artisan tinker --execute="try { DB::connection()->getPdo(); echo 'Database connection successful!'; } catch (Exception \$e) { echo 'Database connection failed: ' . \$e->getMessage(); }"
