@@ -1,0 +1,16 @@
+[phases.setup]
+nixPkgs = ["php82", "php82Extensions.pdo", "php82Extensions.pdo_mysql", "php82Extensions.mbstring", "php82Extensions.xml", "php82Extensions.curl", "php82Extensions.zip", "php82Extensions.gd", "php82Extensions.fileinfo", "php82Extensions.openssl", "php82Extensions.tokenizer", "php82Extensions.json", "php82Extensions.bcmath", "php82Extensions.ctype", "php82Extensions.xmlwriter", "php82Extensions.dom", "php82Extensions.simplexml", "php82Extensions.phar", "php82Extensions.iconv", "php82Extensions.filter", "php82Extensions.spl", "php82Extensions.pcre", "php82Extensions.reflection", "php82Extensions.session", "php82Extensions.standard", "php82Extensions.hash", "php82Extensions.posix", "php82Extensions.tokenizer", "php82Extensions.json", "php82Extensions.bcmath", "php82Extensions.ctype", "php82Extensions.xmlwriter", "php82Extensions.dom", "php82Extensions.simplexml", "php82Extensions.phar", "php82Extensions.iconv", "php82Extensions.filter", "php82Extensions.spl", "php82Extensions.pcre", "php82Extensions.reflection", "php82Extensions.session", "php82Extensions.standard", "php82Extensions.hash", "php82Extensions.posix"]
+
+[phases.install]
+cmds = ["composer install --no-dev --optimize-autoloader"]
+
+[phases.build]
+cmds = [
+  "php artisan config:cache",
+  "php artisan route:cache",
+  "php artisan view:cache",
+  "php artisan migrate --force"
+]
+
+[start]
+cmd = "./railway-start.sh"
