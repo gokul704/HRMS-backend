@@ -9,6 +9,12 @@ fi
 echo "=== Environment Debug ==="
 echo "DATABASE_URL: ${DATABASE_URL:0:50}..."
 echo "DB_URL: ${DB_URL:0:50}..."
+echo "MYSQL_URL: ${MYSQL_URL:0:50}..."
+echo "MYSQLHOST: $MYSQLHOST"
+echo "MYSQLPORT: $MYSQLPORT"
+echo "MYSQLDATABASE: $MYSQLDATABASE"
+echo "MYSQLUSER: $MYSQLUSER"
+echo "MYSQLPASSWORD: ${MYSQLPASSWORD:0:10}..."
 echo "DB_CONNECTION: $DB_CONNECTION"
 echo "DB_HOST: $DB_HOST"
 echo "DB_PORT: $DB_PORT"
@@ -30,6 +36,34 @@ if [ ! -z "$DATABASE_URL" ]; then
     DB_PASSWORD=$(echo $DATABASE_URL | sed -n 's/.*:\/\/[^:]*:\([^@]*\)@.*/\1/p')
 
     echo "Extracted from DATABASE_URL:"
+    echo "DB_HOST: $DB_HOST"
+    echo "DB_PORT: $DB_PORT"
+    echo "DB_DATABASE: $DB_DATABASE"
+    echo "DB_USERNAME: $DB_USERNAME"
+    echo "DB_PASSWORD: ${DB_PASSWORD:0:10}..."
+
+    # Set environment variables for Laravel
+    export DB_HOST=$DB_HOST
+    export DB_PORT=$DB_PORT
+    export DB_DATABASE=$DB_DATABASE
+    export DB_USERNAME=$DB_USERNAME
+    export DB_PASSWORD=$DB_PASSWORD
+fi
+
+# Handle Railway's template variables
+echo "=== Checking Railway Template Variables ==="
+
+# Check if we have the MySQL service variables
+if [ ! -z "$MYSQL_URL" ]; then
+    echo "Using MYSQL_URL from Railway..."
+    # Extract components from MYSQL_URL
+    DB_HOST=$(echo $MYSQL_URL | sed -n 's/.*@\([^:]*\):.*/\1/p')
+    DB_PORT=$(echo $MYSQL_URL | sed -n 's/.*:\([0-9]*\)\/.*/\1/p')
+    DB_DATABASE=$(echo $MYSQL_URL | sed -n 's/.*\/\([^?]*\).*/\1/p')
+    DB_USERNAME=$(echo $MYSQL_URL | sed -n 's/.*:\/\/\([^:]*\):.*/\1/p')
+    DB_PASSWORD=$(echo $MYSQL_URL | sed -n 's/.*:\/\/[^:]*:\([^@]*\)@.*/\1/p')
+
+    echo "Extracted from MYSQL_URL:"
     echo "DB_HOST: $DB_HOST"
     echo "DB_PORT: $DB_PORT"
     echo "DB_DATABASE: $DB_DATABASE"
@@ -67,6 +101,23 @@ if [ ! -z "$DB_URL" ]; then
     export DB_DATABASE=$DB_DATABASE
     export DB_USERNAME=$DB_USERNAME
     export DB_PASSWORD=$DB_PASSWORD
+fi
+
+# Use individual MySQL variables if available
+if [ ! -z "$MYSQLHOST" ]; then
+    echo "Using individual MySQL variables..."
+    export DB_HOST=$MYSQLHOST
+    export DB_PORT=${MYSQLPORT:-3306}
+    export DB_DATABASE=${MYSQLDATABASE:-railway}
+    export DB_USERNAME=${MYSQLUSER:-root}
+    export DB_PASSWORD=${MYSQLPASSWORD:-}
+
+    echo "Using individual variables:"
+    echo "DB_HOST: $DB_HOST"
+    echo "DB_PORT: $DB_PORT"
+    echo "DB_DATABASE: $DB_DATABASE"
+    echo "DB_USERNAME: $DB_USERNAME"
+    echo "DB_PASSWORD: ${DB_PASSWORD:0:10}..."
 fi
 
 # Set fallback values if not provided
