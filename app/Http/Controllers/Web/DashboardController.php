@@ -21,6 +21,7 @@ class DashboardController extends Controller
         $data = [
             'user' => $user,
             'totalDepartments' => Department::count(),
+            'activeDepartments' => Department::where('is_active', true)->count(),
             'totalEmployees' => Employee::count(),
             'activeEmployees' => Employee::where('employment_status', 'active')->count(),
             'totalOfferLetters' => OfferLetter::count(),
@@ -35,6 +36,9 @@ class DashboardController extends Controller
             $data['recentEmployees'] = Employee::with(['user', 'department'])->latest()->take(5)->get();
             $data['recentOfferLetters'] = OfferLetter::with('department')->latest()->take(5)->get();
             $data['recentPayrolls'] = Payroll::with('employee')->latest()->take(5)->get();
+        } else {
+            // Employee dashboard data
+            $data['employee'] = $user->employee;
         }
 
         return view('dashboard.index', $data);

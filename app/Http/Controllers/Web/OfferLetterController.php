@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\OfferLetter;
 use App\Models\Department;
+use App\Http\Controllers\Web\BaseController;
 
-class OfferLetterController extends Controller
+class OfferLetterController extends BaseController
 {
     /**
      * Display a listing of offer letters
@@ -33,7 +34,7 @@ class OfferLetterController extends Controller
 
         $departments = Department::all();
 
-        return view('offer-letters.index', compact('offerLetters', 'departments'));
+        return $this->safeView('offer-letters.index', compact('offerLetters', 'departments'));
     }
 
     /**
@@ -42,7 +43,7 @@ class OfferLetterController extends Controller
     public function create()
     {
         $departments = Department::where('is_active', true)->get();
-        return view('offer-letters.create', compact('departments'));
+        return $this->safeView('offer-letters.create', compact('departments'));
     }
 
     /**
@@ -76,7 +77,7 @@ class OfferLetterController extends Controller
     public function show(OfferLetter $offerLetter)
     {
         $offerLetter->load(['department', 'createdBy', 'approvedBy']);
-        return view('offer-letters.show', compact('offerLetter'));
+        return $this->safeView('offer-letters.show', compact('offerLetter'));
     }
 
     /**
@@ -85,7 +86,7 @@ class OfferLetterController extends Controller
     public function edit(OfferLetter $offerLetter)
     {
         $departments = Department::where('is_active', true)->get();
-        return view('offer-letters.edit', compact('offerLetter', 'departments'));
+        return $this->safeView('offer-letters.edit', compact('offerLetter', 'departments'));
     }
 
     /**
@@ -183,7 +184,7 @@ class OfferLetterController extends Controller
             'recentOffers' => OfferLetter::with(['department', 'createdBy'])->latest()->take(10)->get(),
         ];
 
-        return view('offer-letters.statistics', $data);
+        return $this->safeView('offer-letters.statistics', $data);
     }
 
     /**
@@ -192,6 +193,6 @@ class OfferLetterController extends Controller
     public function byDepartment(Department $department)
     {
         $offerLetters = $department->offerLetters()->with(['createdBy', 'approvedBy'])->paginate(15);
-        return view('offer-letters.by-department', compact('offerLetters', 'department'));
+        return $this->safeView('offer-letters.by-department', compact('offerLetters', 'department'));
     }
 }

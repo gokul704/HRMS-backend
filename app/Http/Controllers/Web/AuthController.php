@@ -39,6 +39,9 @@ class AuthController extends Controller
 
             $user = Auth::user();
 
+            // Update last login time
+            $user->update(['last_login_at' => now()]);
+
             // Redirect based on role
             if ($user->isHr() || $user->isManager()) {
                 return redirect()->route('dashboard')->with('success', 'Welcome back, ' . $user->name . '!');

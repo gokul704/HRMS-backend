@@ -70,7 +70,7 @@
                         <div class="text-xs font-weight-bold text-white-50 text-uppercase mb-1">
                             Total Payroll
                         </div>
-                        <div class="stats-number">${{ number_format($totalPayroll ?? 0) }}</div>
+                        <div class="stats-number">{{ $totalPayrolls ?? 0 }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-money-bill-wave fa-2x text-white-50"></i>
@@ -113,9 +113,9 @@
 
                     <div class="col-md-6">
                         <h6 class="text-muted mb-3">Recent Offer Letters</h6>
-                        @if(isset($recentOffers) && count($recentOffers) > 0)
+                        @if(isset($recentOfferLetters) && count($recentOfferLetters) > 0)
                             <div class="list-group list-group-flush">
-                                @foreach($recentOffers as $offer)
+                                @foreach($recentOfferLetters as $offer)
                                 <div class="list-group-item d-flex justify-content-between align-items-center">
                                     <div>
                                         <strong>{{ $offer->candidate_name }}</strong>

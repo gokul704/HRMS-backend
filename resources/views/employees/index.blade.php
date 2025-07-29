@@ -30,6 +30,7 @@
                             <th>Position</th>
                             <th>Department</th>
                             <th>Status</th>
+                            <th>Online Status</th>
                             <th>Onboarding</th>
                             <th>Actions</th>
                         </tr>
@@ -62,6 +63,20 @@
                                     <span class="badge bg-secondary rounded-pill">Inactive</span>
                                 @else
                                     <span class="badge bg-warning rounded-pill">{{ ucfirst($employee->employment_status) }}</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($employee->user && $employee->user->last_login_at && $employee->user->last_login_at->diffInMinutes(now()) < 5)
+                                    <span class="badge bg-success rounded-pill">
+                                        <i class="fas fa-circle me-1"></i>Online
+                                    </span>
+                                @else
+                                    <span class="badge bg-danger rounded-pill">
+                                        <i class="fas fa-circle me-1"></i>Offline
+                                    </span>
+                                    @if($employee->user && $employee->user->last_login_at)
+                                        <br><small class="text-muted">Last login: {{ $employee->user->last_login_at->diffForHumans() }}</small>
+                                    @endif
                                 @endif
                             </td>
                             <td>

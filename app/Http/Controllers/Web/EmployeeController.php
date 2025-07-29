@@ -52,11 +52,9 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'department_id' => 'required|exists:departments,id',
-            'employee_id' => 'required|string|unique:employees',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
             'phone' => 'required|string|max:20',
             'date_of_birth' => 'required|date',
             'gender' => 'required|in:male,female,other',
@@ -64,15 +62,45 @@ class EmployeeController extends Controller
             'emergency_contact_name' => 'required|string|max:255',
             'emergency_contact_phone' => 'required|string|max:20',
             'position' => 'required|string|max:255',
+            'department_id' => 'required|exists:departments,id',
             'hire_date' => 'required|date',
             'salary' => 'required|numeric|min:0',
             'employment_status' => 'required|in:active,inactive,terminated',
-            'is_onboarded' => 'boolean',
         ]);
 
-        Employee::create($request->all());
+        // Create user account
+        $user = User::create([
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'email' => $request->email,
+            'password' => bcrypt('password123'), // Default password
+            'role' => 'employee',
+            'is_active' => true,
+        ]);
 
-        return redirect()->route('employees.index')
+        // Generate employee ID
+        $employeeId = 'EMP' . str_pad(Employee::count() + 1, 3, '0', STR_PAD_LEFT);
+
+        // Create employee record
+        $employee = Employee::create([
+            'user_id' => $user->id,
+            'department_id' => $request->department_id,
+            'employee_id' => $employeeId,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
+            'date_of_birth' => $request->date_of_birth,
+            'gender' => $request->gender,
+            'address' => $request->address,
+            'emergency_contact_name' => $request->emergency_contact_name,
+            'emergency_contact_phone' => $request->emergency_contact_phone,
+            'position' => $request->position,
+            'hire_date' => $request->hire_date,
+            'salary' => $request->salary,
+            'employment_status' => $request->employment_status,
+            'is_onboarded' => false,
+        ]);
+
+        return redirect()->route('web.employees.index')
             ->with('success', 'Employee created successfully!');
     }
 
@@ -118,7 +146,7 @@ class EmployeeController extends Controller
 
         $employee->update($request->all());
 
-        return redirect()->route('employees.index')
+        return redirect()->route('web.employees.index')
             ->with('success', 'Employee updated successfully!');
     }
 
@@ -129,7 +157,7 @@ class EmployeeController extends Controller
     {
         $employee->delete();
 
-        return redirect()->route('employees.index')
+        return redirect()->route('web.employees.index')
             ->with('success', 'Employee deleted successfully!');
     }
 

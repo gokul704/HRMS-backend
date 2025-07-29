@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Payroll;
 use App\Models\Employee;
+use App\Http\Controllers\Web\BaseController;
 
-class PayrollController extends Controller
+class PayrollController extends BaseController
 {
     /**
      * Display a listing of payrolls
@@ -31,7 +32,7 @@ class PayrollController extends Controller
             ->latest()
             ->paginate(15);
 
-        return view('payrolls.index', compact('payrolls'));
+        return $this->safeView('payrolls.index', compact('payrolls'));
     }
 
     /**
@@ -40,7 +41,7 @@ class PayrollController extends Controller
     public function create()
     {
         $employees = Employee::where('employment_status', 'active')->get();
-        return view('payrolls.create', compact('employees'));
+        return $this->safeView('payrolls.create', compact('employees'));
     }
 
     /**
@@ -74,7 +75,7 @@ class PayrollController extends Controller
     public function show(Payroll $payroll)
     {
         $payroll->load(['employee.user', 'processedBy']);
-        return view('payrolls.show', compact('payroll'));
+        return $this->safeView('payrolls.show', compact('payroll'));
     }
 
     /**
@@ -83,7 +84,7 @@ class PayrollController extends Controller
     public function edit(Payroll $payroll)
     {
         $employees = Employee::where('employment_status', 'active')->get();
-        return view('payrolls.edit', compact('payroll', 'employees'));
+        return $this->safeView('payrolls.edit', compact('payroll', 'employees'));
     }
 
     /**
@@ -164,7 +165,7 @@ class PayrollController extends Controller
             'recentPayrolls' => Payroll::with(['employee.user'])->latest()->take(10)->get(),
         ];
 
-        return view('payrolls.statistics', $data);
+        return $this->safeView('payrolls.statistics', $data);
     }
 
     /**
@@ -173,7 +174,7 @@ class PayrollController extends Controller
     public function byEmployee(Employee $employee)
     {
         $payrolls = $employee->payrolls()->latest()->paginate(15);
-        return view('payrolls.by-employee', compact('payrolls', 'employee'));
+        return $this->safeView('payrolls.by-employee', compact('payrolls', 'employee'));
     }
 
     /**
@@ -231,6 +232,6 @@ class PayrollController extends Controller
 
         $payrolls = $employee->payrolls()->latest()->paginate(15);
 
-        return view('payrolls.employee-payrolls', compact('payrolls', 'employee'));
+        return $this->safeView('payrolls.employee-payrolls', compact('payrolls', 'employee'));
     }
 }
