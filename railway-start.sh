@@ -8,6 +8,7 @@ fi
 # Debug environment variables
 echo "=== Environment Debug ==="
 echo "DATABASE_URL: ${DATABASE_URL:0:50}..."
+echo "DB_URL: ${DB_URL:0:50}..."
 echo "DB_CONNECTION: $DB_CONNECTION"
 echo "DB_HOST: $DB_HOST"
 echo "DB_PORT: $DB_PORT"
@@ -29,6 +30,31 @@ if [ ! -z "$DATABASE_URL" ]; then
     DB_PASSWORD=$(echo $DATABASE_URL | sed -n 's/.*:\/\/[^:]*:\([^@]*\)@.*/\1/p')
 
     echo "Extracted from DATABASE_URL:"
+    echo "DB_HOST: $DB_HOST"
+    echo "DB_PORT: $DB_PORT"
+    echo "DB_DATABASE: $DB_DATABASE"
+    echo "DB_USERNAME: $DB_USERNAME"
+    echo "DB_PASSWORD: ${DB_PASSWORD:0:10}..."
+
+    # Set environment variables for Laravel
+    export DB_HOST=$DB_HOST
+    export DB_PORT=$DB_PORT
+    export DB_DATABASE=$DB_DATABASE
+    export DB_USERNAME=$DB_USERNAME
+    export DB_PASSWORD=$DB_PASSWORD
+fi
+
+# Handle Railway's new variable syntax
+if [ ! -z "$DB_URL" ]; then
+    echo "Using DB_URL from Railway..."
+    # Extract components from DB_URL
+    DB_HOST=$(echo $DB_URL | sed -n 's/.*@\([^:]*\):.*/\1/p')
+    DB_PORT=$(echo $DB_URL | sed -n 's/.*:\([0-9]*\)\/.*/\1/p')
+    DB_DATABASE=$(echo $DB_URL | sed -n 's/.*\/\([^?]*\).*/\1/p')
+    DB_USERNAME=$(echo $DB_URL | sed -n 's/.*:\/\/\([^:]*\):.*/\1/p')
+    DB_PASSWORD=$(echo $DB_URL | sed -n 's/.*:\/\/[^:]*:\([^@]*\)@.*/\1/p')
+
+    echo "Extracted from DB_URL:"
     echo "DB_HOST: $DB_HOST"
     echo "DB_PORT: $DB_PORT"
     echo "DB_DATABASE: $DB_DATABASE"
