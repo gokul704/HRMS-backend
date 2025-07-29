@@ -25,7 +25,9 @@ Route::get('/health', function () {
     return response()->json([
         'status' => 'ok',
         'message' => 'HRMS Application is running',
-        'timestamp' => now()
+        'timestamp' => now(),
+        'environment' => app()->environment(),
+        'database' => config('database.default')
     ]);
 });
 
