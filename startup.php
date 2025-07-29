@@ -21,7 +21,14 @@ echo "MYSQLPORT: " . ($_ENV['MYSQLPORT'] ?? 'NOT SET') . "\n";
 echo "MYSQLDATABASE: " . ($_ENV['MYSQLDATABASE'] ?? 'NOT SET') . "\n";
 echo "MYSQLUSER: " . ($_ENV['MYSQLUSER'] ?? 'NOT SET') . "\n";
 echo "MYSQLPASSWORD: " . (isset($_ENV['MYSQLPASSWORD']) ? substr($_ENV['MYSQLPASSWORD'], 0, 10) . '...' : 'NOT SET') . "\n";
+echo "RAILWAY_PRIVATE_DOMAIN: " . ($_ENV['RAILWAY_PRIVATE_DOMAIN'] ?? 'NOT SET') . "\n";
+echo "RAILWAY_TCP_PROXY_DOMAIN: " . ($_ENV['RAILWAY_TCP_PROXY_DOMAIN'] ?? 'NOT SET') . "\n";
+echo "RAILWAY_TCP_PROXY_PORT: " . ($_ENV['RAILWAY_TCP_PROXY_PORT'] ?? 'NOT SET') . "\n";
 echo "==========================\n\n";
+
+// Check if we're in Railway environment
+$isRailway = !empty($_ENV['RAILWAY_PRIVATE_DOMAIN']);
+echo "Railway Environment Detected: " . ($isRailway ? 'YES' : 'NO') . "\n\n";
 
 // 1. Generate application key if not set
 if (empty($_ENV['APP_KEY']) || $_ENV['APP_KEY'] === 'base64:') {
@@ -48,7 +55,7 @@ passthru('php artisan view:cache');
 
 // 5. Test database connection before migrations
 echo "Testing database connection...\n";
-$returnCode = null; // Initialize $returnCode
+$returnCode = null;
 passthru('php artisan tinker --execute="try { DB::connection()->getPdo(); echo \"Database connection successful!\"; } catch (Exception \$e) { echo \"Database connection failed: \" . \$e->getMessage(); }" 2>&1', $returnCode);
 echo "Database test result: $returnCode\n";
 
@@ -58,6 +65,7 @@ if ($returnCode === 0) {
     passthru('php artisan migrate --force');
 } else {
     echo "Skipping migrations due to database connection failure.\n";
+    echo "This is expected if Railway template variables are not resolved yet.\n";
 }
 
 echo "=== Startup Complete ===\n";

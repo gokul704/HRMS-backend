@@ -1,52 +1,54 @@
 # Railway Environment Variables Fix
 
 ## Current Issue
-Your application is trying to connect to `hrms-backend.railway.internal` but this is not the correct database host.
+Your application is trying to connect to `hrms-backend.railway.internal` but this is not the correct database host. Railway uses template syntax that needs to be resolved.
 
 ## Solution
 
-### Step 1: Update Environment Variables in Railway Dashboard
-
-Go to your Railway dashboard and update these variables:
-
-**Remove these variables:**
+### Step 1: Remove Manual DB Variables
+In your Railway dashboard, **REMOVE** these variables:
 ```
 DB_HOST=hrms-backend.railway.internal
-```
-
-**Add/Update these variables:**
-```
-DB_HOST=mysql.railway.internal
-DB_CONNECTION=mysql
 DB_DATABASE=railway
 DB_PORT=3306
 DB_USERNAME=root
 DB_PASSWORD=nbsjRswegfzZnAkULqciGwQYEheyKpOy
 ```
 
-### Step 2: Ensure MySQL Service is Connected
+### Step 2: Let Railway Handle Database Variables
+Railway will automatically provide these variables from your MySQL service:
+```
+MYSQL_DATABASE="railway"
+MYSQL_URL="mysql://${{MYSQLUSER}}:${{MYSQL_ROOT_PASSWORD}}@${{RAILWAY_PRIVATE_DOMAIN}}:3306/${{MYSQL_DATABASE}}"
+MYSQLHOST="${{RAILWAY_PRIVATE_DOMAIN}}"
+MYSQLPORT="3306"
+MYSQLDATABASE="${{MYSQL_DATABASE}}"
+MYSQLUSER="root"
+MYSQLPASSWORD="${{MYSQL_ROOT_PASSWORD}}"
+```
 
+### Step 3: Keep Only Essential Variables
+Keep only these variables in your Railway dashboard:
+```
+APP_NAME="HRMS"
+APP_ENV="production"
+APP_DEBUG="false"
+DB_CONNECTION="mysql"
+```
+
+### Step 4: Ensure MySQL Service is Connected
 1. In Railway dashboard, check if your MySQL service is connected to your application
 2. The MySQL service should be in the same project as your HRMS-backend
-3. Railway should automatically provide the correct internal host
-
-### Step 3: Alternative - Use Railway's Auto Variables
-
-If Railway provides these automatically, you can remove the manual DB_* variables and let Railway handle it:
-
-**Remove all DB_* variables and let Railway provide:**
-- `MYSQL_URL`
-- `MYSQLHOST`
-- `MYSQLPORT`
-- `MYSQLDATABASE`
-- `MYSQLUSER`
-- `MYSQLPASSWORD`
+3. Railway will automatically resolve the template variables
 
 ## Expected Result
 
-After updating the environment variables, the startup script should show:
+After removing manual DB variables, the startup script should show:
 ```
-DB_HOST: mysql.railway.internal
+Railway Environment Detected: YES
+MYSQLHOST: [actual-railway-domain].railway.internal
+MYSQLDATABASE: railway
+MYSQLUSER: root
 Database connection successful!
 ```
 
@@ -55,4 +57,11 @@ Database connection successful!
 After updating variables, redeploy and check:
 1. Railway logs for "Database connection successful!"
 2. Visit `/health` endpoint
-3. Visit `/test-db` endpoint 
+3. Visit `/test-db` endpoint
+
+## Troubleshooting
+
+If you still see "Connection refused":
+1. Check that MySQL service is connected to your app in Railway
+2. Verify the MySQL service is running
+3. Check Railway logs for any template resolution errors 
