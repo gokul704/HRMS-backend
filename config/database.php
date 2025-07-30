@@ -9,7 +9,7 @@ return [
     | Default Database Connection Name
     |--------------------------------------------------------------------------
     |
-    | Here you may specify which of the database connections below you wish
+    | Here you may specify which of the the database connections below you wish
     | to use as your default connection for database operations. This is
     | the connection which will be utilized unless another connection
     | is explicitly specified when you execute a query / statement.
@@ -45,11 +45,11 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('MYSQL_URL'),
-            'host' => env('DB_HOST', env('MYSQLHOST', '127.0.0.1')),
-            'port' => env('DB_PORT', env('MYSQLPORT', '3306')),
-            'database' => env('DB_DATABASE', env('MYSQLDATABASE', 'laravel')),
-            'username' => env('DB_USERNAME', env('MYSQLUSER', 'root')),
-            'password' => env('DB_PASSWORD', env('MYSQLPASSWORD', '')),
+            'host' => env('MYSQLHOST', env('DB_HOST', 'mysql.railway.internal')),
+            'port' => env('MYSQLPORT', env('DB_PORT', '3306')),
+            'database' => env('MYSQLDATABASE', env('DB_DATABASE', 'railway')),
+            'username' => env('MYSQLUSER', env('DB_USERNAME', 'root')),
+            'password' => env('MYSQLPASSWORD', env('DB_PASSWORD', '')),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
@@ -67,11 +67,11 @@ return [
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('MYSQL_URL'),
-            'host' => env('DB_HOST', env('MYSQLHOST', '127.0.0.1')),
-            'port' => env('DB_PORT', env('MYSQLPORT', '3306')),
-            'database' => env('DB_DATABASE', env('MYSQLDATABASE', 'laravel')),
-            'username' => env('DB_USERNAME', env('MYSQLUSER', 'root')),
-            'password' => env('DB_PASSWORD', env('MYSQLPASSWORD', '')),
+            'host' => env('MYSQLHOST', env('DB_HOST', 'mysql.railway.internal')),
+            'port' => env('MYSQLPORT', env('DB_PORT', '3306')),
+            'database' => env('MYSQLDATABASE', env('DB_DATABASE', 'railway')),
+            'username' => env('MYSQLUSER', env('DB_USERNAME', 'root')),
+            'password' => env('MYSQLPASSWORD', env('DB_PASSWORD', '')),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
