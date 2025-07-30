@@ -1,6 +1,6 @@
-# HRMS API Integration Guide for Flutter
+# StaffIQ API Integration Guide for Flutter
 
-This guide provides comprehensive information for integrating the HRMS Laravel backend with your Flutter application.
+This guide provides comprehensive information for integrating the StaffIQ Laravel backend with your Flutter application.
 
 ## Base Configuration
 

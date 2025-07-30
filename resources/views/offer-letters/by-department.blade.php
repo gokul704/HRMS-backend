@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Department Offer Letters - HRMS')
+@section('title', 'Department Offer Letters - StaffIQ')
 @section('page-title', 'Offer Letters for {{ $department->name }}')
 @section('content')
 <div class="card">
@@ -24,7 +24,7 @@
                         <tr>
                             <td>{{ $offerLetter->candidate_name }}</td>
                             <td>{{ $offerLetter->position }}</td>
-                            <td>${{ number_format($offerLetter->salary, 2) }}</td>
+                            <td>₹{{ number_format($offerLetter->salary, 2) }}</td>
                             <td>{{ ucfirst($offerLetter->status) }}</td>
                             <td>
                                 <a href="{{ route('web.offer-letters.show', $offerLetter) }}" class="btn btn-sm btn-primary">View</a>

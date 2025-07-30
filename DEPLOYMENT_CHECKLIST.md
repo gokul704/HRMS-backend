@@ -1,4 +1,4 @@
-# HRMS Backend Deployment Checklist
+# StaffIQ Backend Deployment Checklist
 
 ## ✅ Current Status
 - Application is running successfully on port 8000

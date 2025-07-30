@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login - HRMS')
+@section('title', 'Login - StaffIQ')
 
 @section('content')
 <div class="container-fluid">
@@ -9,7 +9,7 @@
             <div class="card shadow-lg border-0">
                 <div class="card-body p-5">
                     <div class="text-center mb-4">
-                        <h2 class="fw-bold text-primary">HRMS</h2>
+                        <h2 class="fw-bold text-primary">StaffIQ</h2>
                         <p class="text-muted">Human Resource Management System</p>
                     </div>
 

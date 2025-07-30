@@ -52,7 +52,7 @@ class BaseController extends Controller
             $content = <<<HTML
 @extends('layouts.app')
 
-@section('title', '{$title} - HRMS')
+@section('title', '{$title} - StaffIQ')
 
 @section('page-title', '{$title}')
 

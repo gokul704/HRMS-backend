@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Employees - HRMS')
+@section('title', 'Employees - StaffIQ')
 
 @section('page-title', 'Employees')
 
@@ -88,7 +88,7 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                                                        <a href="{{ route('web.employees.show', $employee) }}"
+                                    <a href="{{ route('web.employees.show', $employee) }}"
                                        class="btn btn-sm btn-outline-primary"
                                        title="View">
                                         <i class="fas fa-eye"></i>
@@ -127,8 +127,13 @@
             </div>
 
             @if(isset($employees) && method_exists($employees, 'links'))
-                <div class="d-flex justify-content-center mt-4">
-                    {{ $employees->links() }}
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div class="text-muted">
+                        Showing {{ $employees->firstItem() ?? 0 }} to {{ $employees->lastItem() ?? 0 }} of {{ $employees->total() }} results
+                    </div>
+                    <div>
+                        {{ $employees->links() }}
+                    </div>
                 </div>
             @endif
         @else

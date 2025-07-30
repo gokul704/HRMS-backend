@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# HRMS Production Setup Script
+# StaffIQ Production Setup Script
 # This script helps configure the application for production deployment
 
 set -e
 
-echo "🔧 Setting up HRMS for production deployment..."
+echo "🔧 Setting up StaffIQ for production deployment..."
 
 # Colors for output
 RED='\033[0;31m'

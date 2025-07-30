@@ -1,5 +1,5 @@
 ================================================================================
-                           HRMS API ENDPOINTS COMPLETE LIST
+                           StaffIQ API ENDPOINTS COMPLETE LIST
 ================================================================================
 
 Base URL: http://localhost:8000/api
@@ -182,7 +182,7 @@ Authentication: Bearer Token (except for login)
         "position": "Senior Developer",
         "department_id": 2,
         "offered_salary": 75000,
-        "salary_currency": "USD",
+        "salary_currency": "INR",
         "offer_date": "2024-01-15",
         "joining_date": "2024-02-01",
         "job_description": "Senior software development role with team leadership",
@@ -666,5 +666,5 @@ Categories: 6
                               END OF API LIST
 ================================================================================
 
-This file contains all 49 API endpoints for the HRMS system.
+This file contains all 49 API endpoints for the StaffIQ system.
 Use this as a reference for Postman testing and API integration.

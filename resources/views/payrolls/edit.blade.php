@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Payroll - HRMS')
+@section('title', 'Edit Payroll - StaffIQ')
 @section('page-title', 'Edit Payroll')
 @section('content')
 <div class="card">
@@ -13,19 +13,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="basic_salary" class="form-label">Basic Salary</label>
+                        <label for="basic_salary" class="form-label">Basic Salary (₹)</label>
                         <input type="number" name="basic_salary" value="{{ $payroll->basic_salary }}" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="allowances" class="form-label">Allowances</label>
+                        <label for="allowances" class="form-label">Allowances (₹)</label>
                         <input type="number" name="allowances" value="{{ $payroll->allowances }}" class="form-control">
                     </div>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="deductions" class="form-label">Deductions</label>
+                <label for="deductions" class="form-label">Deductions (₹)</label>
                 <input type="number" name="deductions" value="{{ $payroll->deductions }}" class="form-control">
             </div>
             <div class="mb-3">

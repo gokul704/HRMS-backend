@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Payroll Details - HRMS')
+@section('title', 'Payroll Details - StaffIQ')
 
 @section('page-title', 'Payroll Details')
 
@@ -115,6 +115,17 @@
                 Back to Payrolls
             </a>
             <div>
+                <form method="POST" action="{{ route('web.payrolls.generate-payslip', $payroll) }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-info">
+                        <i class="fas fa-file-pdf me-2"></i>
+                        Generate Payslip
+                    </button>
+                </form>
+                <a href="{{ route('web.payrolls.download-payslip', $payroll) }}" class="btn btn-success">
+                    <i class="fas fa-download me-2"></i>
+                    Download Payslip
+                </a>
                 <a href="{{ route('web.payrolls.edit', $payroll) }}" class="btn btn-warning">
                     <i class="fas fa-edit me-2"></i>
                     Edit

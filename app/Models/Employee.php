@@ -65,6 +65,14 @@ class Employee extends Model
     }
 
     /**
+     * Get leave records for this employee
+     */
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
+
+    /**
      * Get full name of the employee
      */
     public function getFullNameAttribute()

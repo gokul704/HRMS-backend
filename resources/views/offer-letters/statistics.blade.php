@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Offer Letter Statistics - HRMS')
+@section('title', 'Offer Letter Statistics - StaffIQ')
 @section('page-title', 'Offer Letter Statistics')
 @section('content')
 <div class="card">

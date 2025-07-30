@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Employee Details - HRMS')
+@section('title', 'Employee Details - StaffIQ')
 
 @section('page-title', 'Employee Details')
 

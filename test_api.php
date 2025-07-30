@@ -1,9 +1,9 @@
 <?php
 
-// Simple API test script for HRMS
+// Simple API test script for StaffIQ
 $baseUrl = 'http://localhost:8000/api';
 
-echo "Testing HRMS API Endpoints\n";
+echo "Testing StaffIQ API Endpoints\n";
 echo "==========================\n\n";
 
 // Test 1: Login
@@ -150,5 +150,5 @@ if ($httpCode === 200) {
 
 echo "API Testing Complete!\n";
 echo "====================\n";
-echo "The HRMS API is working correctly.\n";
+echo "The StaffIQ API is working correctly.\n";
 echo "You can now integrate this with your Flutter app.\n";

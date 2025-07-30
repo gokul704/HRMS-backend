@@ -37,7 +37,7 @@ echo "Creating payroll views..."
 # payrolls/edit.blade.php
 cat > resources/views/payrolls/edit.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Edit Payroll - HRMS')
+@section('title', 'Edit Payroll - StaffIQ')
 @section('page-title', 'Edit Payroll')
 @section('content')
 <div class="card">
@@ -83,7 +83,7 @@ EOF
 # payrolls/statistics.blade.php
 cat > resources/views/payrolls/statistics.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Payroll Statistics - HRMS')
+@section('title', 'Payroll Statistics - StaffIQ')
 @section('page-title', 'Payroll Statistics')
 @section('content')
 <div class="card">
@@ -133,7 +133,7 @@ EOF
 # payrolls/by-employee.blade.php
 cat > resources/views/payrolls/by-employee.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Employee Payrolls - HRMS')
+@section('title', 'Employee Payrolls - StaffIQ')
 @section('page-title', 'Payrolls for {{ $employee->name }}')
 @section('content')
 <div class="card">
@@ -179,7 +179,7 @@ EOF
 # payrolls/employee-payrolls.blade.php
 cat > resources/views/payrolls/employee-payrolls.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'My Payrolls - HRMS')
+@section('title', 'My Payrolls - StaffIQ')
 @section('page-title', 'My Payrolls')
 @section('content')
 <div class="card">
@@ -226,7 +226,7 @@ echo "Creating offer letter views..."
 # offer-letters/create.blade.php
 cat > resources/views/offer-letters/create.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Create Offer Letter - HRMS')
+@section('title', 'Create Offer Letter - StaffIQ')
 @section('page-title', 'Create Offer Letter')
 @section('content')
 <div class="card">
@@ -289,7 +289,7 @@ EOF
 # offer-letters/show.blade.php
 cat > resources/views/offer-letters/show.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Offer Letter Details - HRMS')
+@section('title', 'Offer Letter Details - StaffIQ')
 @section('page-title', 'Offer Letter Details')
 @section('content')
 <div class="card">
@@ -329,7 +329,7 @@ EOF
 # offer-letters/edit.blade.php
 cat > resources/views/offer-letters/edit.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Edit Offer Letter - HRMS')
+@section('title', 'Edit Offer Letter - StaffIQ')
 @section('page-title', 'Edit Offer Letter')
 @section('content')
 <div class="card">
@@ -395,7 +395,7 @@ EOF
 # offer-letters/statistics.blade.php
 cat > resources/views/offer-letters/statistics.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Offer Letter Statistics - HRMS')
+@section('title', 'Offer Letter Statistics - StaffIQ')
 @section('page-title', 'Offer Letter Statistics')
 @section('content')
 <div class="card">
@@ -445,7 +445,7 @@ EOF
 # offer-letters/by-department.blade.php
 cat > resources/views/offer-letters/by-department.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Department Offer Letters - HRMS')
+@section('title', 'Department Offer Letters - StaffIQ')
 @section('page-title', 'Offer Letters for {{ $department->name }}')
 @section('content')
 <div class="card">

@@ -70,13 +70,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/employees/statistics', [EmployeeController::class, 'statistics']);
     Route::get('/departments/{department}/employees', [EmployeeController::class, 'byDepartment']);
 
-    // Offer Letter routes
-    Route::apiResource('offer-letters', OfferLetterController::class);
-    Route::patch('/offer-letters/{offerLetter}/send', [OfferLetterController::class, 'send']);
-    Route::patch('/offer-letters/{offerLetter}/approve', [OfferLetterController::class, 'approve']);
-    Route::patch('/offer-letters/{offerLetter}/update-status', [OfferLetterController::class, 'updateStatus']);
-    Route::get('/offer-letters/statistics', [OfferLetterController::class, 'statistics']);
-    Route::get('/departments/{department}/offer-letters', [OfferLetterController::class, 'byDepartment']);
+    // Offer Letter routes - HR only
+    Route::middleware('role:hr')->group(function () {
+        Route::apiResource('offer-letters', OfferLetterController::class);
+        Route::patch('/offer-letters/{offerLetter}/send', [OfferLetterController::class, 'send']);
+        Route::patch('/offer-letters/{offerLetter}/update-status', [OfferLetterController::class, 'updateStatus']);
+        Route::get('/offer-letters/statistics', [OfferLetterController::class, 'statistics']);
+        Route::get('/departments/{department}/offer-letters', [OfferLetterController::class, 'byDepartment']);
+    });
+
+    // Offer Letter view routes - Manager can view but not create
+    Route::middleware('role:manager')->group(function () {
+        Route::get('/offer-letters', [OfferLetterController::class, 'index']);
+        Route::get('/offer-letters/{offerLetter}', [OfferLetterController::class, 'show']);
+        Route::patch('/offer-letters/{offerLetter}/approve', [OfferLetterController::class, 'approve']);
+    });
 
     // Payroll routes
     Route::apiResource('payrolls', PayrollController::class);

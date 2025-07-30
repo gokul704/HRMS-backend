@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HRMS - Human Resource Management System</title>
+    <title>StaffIQ - Human Resource Management System</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -56,7 +56,7 @@
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">
                 <i class="fas fa-users me-2"></i>
-                HRMS
+                StaffIQ
             </a>
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="{{ route('login') }}">
@@ -208,7 +208,7 @@
     <!-- Footer -->
     <footer class="text-center py-4 text-white-50">
         <div class="container">
-            <p>&copy; 2024 HRMS - Human Resource Management System. All rights reserved.</p>
+            <p>&copy; 2024 StaffIQ - Human Resource Management System. All rights reserved.</p>
             <p class="small">
                 Built with Laravel, Bootstrap, and modern web technologies.
             </p>

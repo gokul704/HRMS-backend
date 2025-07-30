@@ -1,4 +1,4 @@
-# HRMS Web Routes - Complete Reference
+# StaffIQ Web Routes - Complete Reference
 
 ## Base URL
 ```
@@ -7,7 +7,7 @@ https://hrms-backend-production-2e6d.up.railway.app
 
 ## 🌐 Web Interface Overview
 
-The HRMS system provides a comprehensive web interface built with Laravel Blade templates and Bootstrap 5. The interface includes:
+The StaffIQ system provides a comprehensive web interface built with Laravel Blade templates and Bootstrap 5. The interface includes:
 
 - **Modern, responsive design** with gradient backgrounds and clean UI
 - **Role-based navigation** that adapts to user permissions

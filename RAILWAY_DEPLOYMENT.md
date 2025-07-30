@@ -1,7 +1,7 @@
-# Railway Deployment Guide for HRMS Backend
+# Railway Deployment Guide for StaffIQ Backend
 
 ## Overview
-This guide provides step-by-step instructions for deploying the HRMS Laravel application to Railway.
+This guide provides step-by-step instructions for deploying the StaffIQ Laravel application to Railway.
 
 ## Prerequisites
 - Railway account
@@ -14,7 +14,7 @@ This guide provides step-by-step instructions for deploying the HRMS Laravel app
 Set the following environment variables in your Railway project:
 
 ```bash
-APP_NAME=HRMS Backend
+APP_NAME=StaffIQ Backend
 APP_ENV=production
 APP_KEY=base64:your-generated-key
 APP_DEBUG=false

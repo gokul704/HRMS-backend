@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Production MySQL Setup Script for HRMS Backend
+# Production MySQL Setup Script for StaffIQ Backend
 # Usage: ./production_mysql_setup.sh
 
 set -e

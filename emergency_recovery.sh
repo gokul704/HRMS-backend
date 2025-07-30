@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Emergency Recovery Script for MySQL + HRMS Application Failures
+# Emergency Recovery Script for MySQL + StaffIQ Application Failures
 # Usage: ./emergency_recovery.sh
 
 set -e
 
-echo "🚨 EMERGENCY RECOVERY - MySQL + HRMS Application"
+echo "🚨 EMERGENCY RECOVERY - MySQL + StaffIQ Application"
 echo "================================================"
 echo ""
 
@@ -97,7 +97,7 @@ else
 fi
 
 echo ""
-echo "🌐 HRMS Application Emergency Recovery"
+echo "🌐 StaffIQ Application Emergency Recovery"
 echo "===================================="
 echo ""
 

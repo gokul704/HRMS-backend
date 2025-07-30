@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# HRMS Backend Diagnostic Script
+# StaffIQ Backend Diagnostic Script
 # Usage: ./diagnose.sh
 
-echo "🔍 HRMS Backend Diagnostic Report"
+echo "🔍 StaffIQ Backend Diagnostic Report"
 echo "=================================="
 echo ""
 

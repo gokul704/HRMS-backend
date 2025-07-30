@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Profile - HRMS')
+@section('title', 'Profile - StaffIQ')
 
 @section('page-title', 'Profile Settings')
 

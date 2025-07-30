@@ -1,8 +1,8 @@
-# 🚀 HRMS Backend - Deployment Complete!
+# 🚀 StaffIQ Backend - Deployment Complete!
 
 ## ✅ Deployment Status: SUCCESS
 
-Your HRMS application has been successfully deployed and is ready for production use.
+Your StaffIQ application has been successfully deployed and is ready for production use.
 
 ## 📊 Current Status
 
@@ -173,7 +173,7 @@ tail -f storage/logs/laravel.log
 
 ## 🎉 Deployment Summary
 
-Your HRMS application is now:
+Your StaffIQ application is now:
 - ✅ **Deployed and running**
 - ✅ **Optimized for production**
 - ✅ **Secured with proper settings**
@@ -195,6 +195,6 @@ Your HRMS application is now:
 
 ## 🚀 Ready for Production!
 
-Your HRMS application is now ready for production deployment. Follow the generated guides to complete the web server configuration and SSL setup.
+Your StaffIQ application is now ready for production deployment. Follow the generated guides to complete the web server configuration and SSL setup.
 
 **Happy Deploying! 🎉** 

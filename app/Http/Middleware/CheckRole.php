@@ -16,20 +16,26 @@ class CheckRole
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         if (!$request->user()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 401);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unauthorized',
+                ], 401);
+            }
+            return redirect()->route('login');
         }
 
         $user = $request->user();
 
         // Check if user has any of the required roles
         if (!$user->hasAnyRole($roles)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied. Insufficient permissions.',
-            ], 403);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Access denied. Insufficient permissions.',
+                ], 403);
+            }
+            return redirect()->route('dashboard')->with('error', 'Access denied. Insufficient permissions.');
         }
 
         return $next($request);

@@ -1,4 +1,4 @@
-# HRMS (Human Resource Management System) - Laravel Backend
+# StaffIQ (Human Resource Management System) - Laravel Backend
 
 A comprehensive Human Resource Management System built with Laravel, designed to handle employee management, offer letters, payroll processing, and role-based access control.
 
@@ -53,7 +53,7 @@ A comprehensive Human Resource Management System built with Laravel, designed to
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd HRMS-backend
+   cd StaffIQ-backend
    ```
 
 2. **Install dependencies**
@@ -180,7 +180,7 @@ Content-Type: application/json
     "position": "Senior Developer",
     "department_id": 2,
     "offered_salary": 75000,
-    "salary_currency": "USD",
+    "salary_currency": "INR",
     "offer_date": "2024-01-15",
     "joining_date": "2024-02-01",
     "job_description": "Senior software development role",

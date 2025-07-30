@@ -1,8 +1,8 @@
-# HRMS Roles and Users - Complete Reference
+# StaffIQ Roles and Users - Complete Reference
 
-## 🏢 HRMS System Overview
+## 🏢 StaffIQ System Overview
 
-The HRMS (Human Resource Management System) implements a **Role-Based Access Control (RBAC)** system with three distinct roles, each with specific permissions and access levels.
+The StaffIQ (Human Resource Management System) implements a **Role-Based Access Control (RBAC)** system with three distinct roles, each with specific permissions and access levels.
 
 ---
 
@@ -28,7 +28,7 @@ The HRMS (Human Resource Management System) implements a **Role-Based Access Con
 
 ### 🏛️ **HR (Human Resources)**
 
-**Role Description:** Human Resources professionals with full administrative access to all HRMS features.
+**Role Description:** Human Resources professionals with full administrative access to all StaffIQ features.
 
 **Primary Responsibilities:**
 - Employee lifecycle management
@@ -575,4 +575,4 @@ Employee User → Limited Read Access + Personal Data → Self-Service → Perso
 - **Personal Data Access:** Employee role only
 - **Read-Only Access:** Employee role for most features
 
-The HRMS system provides comprehensive role-based access control with clear separation of responsibilities and appropriate data access patterns for each user role. 
+The StaffIQ system provides comprehensive role-based access control with clear separation of responsibilities and appropriate data access patterns for each user role. 

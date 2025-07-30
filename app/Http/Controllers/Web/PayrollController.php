@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 use App\Models\Payroll;
 use App\Models\Employee;
 use App\Http\Controllers\Web\BaseController;
+use App\Services\PayslipService;
 
 class PayrollController extends BaseController
 {
+    protected $payslipService;
+
+    public function __construct(PayslipService $payslipService)
+    {
+        $this->payslipService = $payslipService;
+    }
+
     /**
      * Display a listing of payrolls
      */
@@ -178,6 +186,15 @@ class PayrollController extends BaseController
     }
 
     /**
+     * Show bulk generate form
+     */
+    public function showBulkGenerateForm()
+    {
+        $departments = Department::all();
+        return $this->safeView('payrolls.generate-bulk', compact('departments'));
+    }
+
+    /**
      * Generate bulk payrolls
      */
     public function generateBulk(Request $request)
@@ -195,18 +212,25 @@ class PayrollController extends BaseController
 
         $created = 0;
         foreach ($employees as $employee) {
+            // Parse the payroll period (format: YYYY-MM)
+            $periodParts = explode('-', $request->payroll_period);
+            $year = $periodParts[0];
+            $month = $periodParts[1];
+
             // Check if payroll already exists for this period
             $existingPayroll = Payroll::where('employee_id', $employee->id)
-                ->where('payroll_period', $request->payroll_period)
+                ->where('month', $month)
+                ->where('year', $year)
                 ->first();
 
             if (!$existingPayroll) {
                 Payroll::create([
                     'employee_id' => $employee->id,
-                    'payroll_period' => $request->payroll_period,
+                    'month' => $month,
+                    'year' => $year,
                     'basic_salary' => $employee->salary,
                     'allowances' => 0,
-                    'deductions' => 0,
+                    'other_deductions' => 0,
                     'net_salary' => $employee->salary,
                     'payment_status' => 'pending',
                     'processed_by' => auth()->id(),
@@ -219,18 +243,80 @@ class PayrollController extends BaseController
     }
 
     /**
-     * Show employee payrolls (Employee only)
+     * Generate PDF payslip for a payroll
+     */
+    public function generatePayslip(Payroll $payroll)
+    {
+        try {
+            $filePath = $this->payslipService->generatePayslip($payroll);
+
+            return redirect()->back()->with('success', 'Payslip generated successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Payslip generation error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error generating payslip: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Download PDF payslip
+     */
+    public function downloadPayslip(Payroll $payroll)
+    {
+        try {
+            return $this->payslipService->downloadPayslip($payroll);
+        } catch (\Exception $e) {
+            \Log::error('Payslip download error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error downloading payslip: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Generate payslips for multiple payrolls
+     */
+    public function generateBulkPayslips(Request $request)
+    {
+        try {
+            $request->validate([
+                'payroll_ids' => 'required|array',
+                'payroll_ids.*' => 'exists:payrolls,id'
+            ]);
+
+            $payrolls = Payroll::whereIn('id', $request->payroll_ids)->get();
+
+            if ($payrolls->isEmpty()) {
+                return redirect()->back()->with('error', 'No valid payrolls selected.');
+            }
+
+            $generatedFiles = $this->payslipService->generateBulkPayslips($payrolls);
+
+            return redirect()->back()->with('success', 'Generated ' . count($generatedFiles) . ' payslips successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Bulk payslip generation error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error generating payslips: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Show employee's own payrolls
      */
     public function employeePayrolls()
     {
         $user = auth()->user();
+
+        if (!$user->isEmployee()) {
+            return redirect()->route('dashboard')->with('error', 'Access denied.');
+        }
+
         $employee = $user->employee;
 
         if (!$employee) {
             return redirect()->route('dashboard')->with('error', 'Employee profile not found.');
         }
 
-        $payrolls = $employee->payrolls()->latest()->paginate(15);
+        $payrolls = $employee->payrolls()
+            ->with(['processedBy'])
+            ->latest()
+            ->paginate(15);
 
         return $this->safeView('payrolls.employee-payrolls', compact('payrolls', 'employee'));
     }

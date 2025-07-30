@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Department;
 use App\Models\User;
+use App\Models\Leave; // Added this import
+use Carbon\Carbon; // Added this import
 
 class EmployeeController extends Controller
 {
@@ -109,6 +111,24 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
+        $user = auth()->user();
+
+        // Check access permissions
+        if ($user->isEmployee()) {
+            // Employees can only view their own profile
+            if ($user->employee->id !== $employee->id) {
+                return redirect()->route('dashboard')->with('error', 'Access denied.');
+            }
+        } elseif ($user->isManager()) {
+            // Managers can only view employees from their department
+            if ($user->employee->department_id !== $employee->department_id) {
+                return redirect()->route('dashboard')->with('error', 'Access denied.');
+            }
+        } elseif (!$user->isHr()) {
+            // Only HR can view all employees
+            return redirect()->route('dashboard')->with('error', 'Access denied.');
+        }
+
         $employee->load(['user', 'department', 'payrolls']);
         return view('employees.show', compact('employee'));
     }
@@ -200,9 +220,91 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Show employee profile (Employee only)
+     * Show employee profile (for employees)
      */
     public function profile()
+    {
+        $user = auth()->user();
+
+        if (!$user->isEmployee()) {
+            return redirect()->route('dashboard')->with('error', 'Access denied.');
+        }
+
+        $employee = $user->employee;
+
+        if (!$employee) {
+            return redirect()->route('dashboard')->with('error', 'Employee profile not found.');
+        }
+
+        // Get employee's leave statistics
+        $leaveStats = [
+            'total_leaves' => $employee->leaves()->count(),
+            'approved_leaves' => $employee->leaves()->whereIn('status', ['manager_approved', 'hr_approved'])->count(),
+            'pending_leaves' => $employee->leaves()->where('status', 'pending')->count(),
+            'rejected_leaves' => $employee->leaves()->whereIn('status', ['manager_rejected', 'hr_rejected'])->count(),
+        ];
+
+        // Get recent leaves
+        $recentLeaves = $employee->leaves()
+            ->with(['appliedBy', 'approvedBy'])
+            ->latest()
+            ->take(5)
+            ->get();
+
+        // Get recent payrolls
+        $recentPayrolls = $employee->payrolls()
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('employees.profile', compact('employee', 'leaveStats', 'recentLeaves', 'recentPayrolls'));
+    }
+
+    /**
+     * Show user's own profile (for HR and Managers)
+     */
+    public function myProfile()
+    {
+        $user = auth()->user();
+
+        if ($user->isEmployee()) {
+            return redirect()->route('web.employee.profile');
+        }
+
+        $employee = $user->employee;
+
+        if (!$employee) {
+            return redirect()->route('dashboard')->with('error', 'Employee profile not found.');
+        }
+
+        // Get employee's leave statistics
+        $leaveStats = [
+            'total_leaves' => $employee->leaves()->count(),
+            'approved_leaves' => $employee->leaves()->whereIn('status', ['manager_approved', 'hr_approved'])->count(),
+            'pending_leaves' => $employee->leaves()->where('status', 'pending')->count(),
+            'rejected_leaves' => $employee->leaves()->whereIn('status', ['manager_rejected', 'hr_rejected'])->count(),
+        ];
+
+        // Get recent leaves
+        $recentLeaves = $employee->leaves()
+            ->with(['appliedBy', 'approvedBy'])
+            ->latest()
+            ->take(5)
+            ->get();
+
+        // Get recent payrolls
+        $recentPayrolls = $employee->payrolls()
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('employees.profile', compact('employee', 'leaveStats', 'recentLeaves', 'recentPayrolls'));
+    }
+
+    /**
+     * Show user's own leaves (for all users)
+     */
+    public function myLeaves()
     {
         $user = auth()->user();
         $employee = $user->employee;
@@ -211,8 +313,139 @@ class EmployeeController extends Controller
             return redirect()->route('dashboard')->with('error', 'Employee profile not found.');
         }
 
-        $employee->load(['department', 'payrolls']);
+        $leaves = $employee->leaves()
+            ->with(['appliedBy', 'approvedBy'])
+            ->latest()
+            ->paginate(15);
 
-        return view('employees.profile', compact('employee'));
+        return view('employees.my-leaves', compact('leaves', 'employee'));
+    }
+
+    /**
+     * Show form to request leave
+     */
+    public function requestLeave()
+    {
+        $user = auth()->user();
+        $employee = $user->employee;
+
+        if (!$employee) {
+            return redirect()->route('dashboard')->with('error', 'Employee profile not found.');
+        }
+
+        return view('employees.request-leave', compact('employee'));
+    }
+
+    /**
+     * Store leave request
+     */
+    public function storeLeaveRequest(Request $request)
+    {
+        $user = auth()->user();
+        $employee = $user->employee;
+
+        if (!$employee) {
+            return redirect()->route('dashboard')->with('error', 'Employee profile not found.');
+        }
+
+        $request->validate([
+            'leave_type' => 'required|in:annual,sick,casual,maternity,paternity,other',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'reason' => 'required|string|max:500',
+        ]);
+
+        // Calculate total days
+        $startDate = Carbon::parse($request->start_date);
+        $endDate = Carbon::parse($request->end_date);
+        $totalDays = $startDate->diffInDays($endDate) + 1;
+
+        // Check if employee has enough leave balance (basic validation)
+        $leaveBalance = $this->calculateLeaveBalance($employee, $request->leave_type);
+
+        if ($leaveBalance < $totalDays) {
+            return back()->withErrors(['leave_type' => 'Insufficient leave balance.']);
+        }
+
+        // Create leave request
+        $leave = Leave::create([
+            'employee_id' => $employee->id,
+            'leave_type' => $request->leave_type,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'total_days' => $totalDays,
+            'reason' => $request->reason,
+            'status' => 'pending',
+            'applied_by' => $user->id,
+        ]);
+
+        return redirect()->route('employees.my-leaves')->with('success', 'Leave request submitted successfully.');
+    }
+
+    /**
+     * Show manager's team
+     */
+    public function managerTeam()
+    {
+        $user = auth()->user();
+
+        if (!$user->isManager()) {
+            return redirect()->route('dashboard')->with('error', 'Access denied.');
+        }
+
+        $employee = $user->employee;
+
+        if (!$employee || !$employee->department) {
+            return redirect()->route('dashboard')->with('error', 'Manager department not found.');
+        }
+
+        $teamMembers = Employee::where('department_id', $employee->department_id)
+            ->where('id', '!=', $employee->id) // Exclude manager
+            ->with(['user', 'leaves' => function($query) {
+                $query->whereYear('start_date', date('Y'));
+            }])
+            ->withCount(['leaves as total_leaves' => function($query) {
+                $query->whereYear('start_date', date('Y'));
+            }])
+            ->withCount(['leaves as pending_leaves' => function($query) {
+                $query->whereYear('start_date', date('Y'))->where('status', 'pending');
+            }])
+            ->get();
+
+        $pendingLeaves = Leave::with(['employee.user'])
+            ->whereHas('employee', function($query) use ($employee) {
+                $query->where('department_id', $employee->department_id);
+            })
+            ->where('status', 'pending')
+            ->latest()
+            ->get();
+
+        return view('employees.manager-team', compact('teamMembers', 'pendingLeaves', 'employee'));
+    }
+
+    /**
+     * Calculate leave balance for employee
+     */
+    private function calculateLeaveBalance($employee, $leaveType)
+    {
+        // This is a simplified calculation
+        // In a real system, you would have leave policies and balances
+        $usedLeaves = $employee->leaves()
+            ->where('leave_type', $leaveType)
+            ->whereIn('status', ['manager_approved', 'hr_approved'])
+            ->whereYear('start_date', date('Y'))
+            ->sum('total_days');
+
+        // Default leave allocation (this should come from leave policies)
+        $allocatedLeaves = match($leaveType) {
+            'annual' => 21,
+            'sick' => 10,
+            'casual' => 7,
+            'maternity' => 90,
+            'paternity' => 14,
+            default => 5
+        };
+
+        return $allocatedLeaves - $usedLeaves;
     }
 }

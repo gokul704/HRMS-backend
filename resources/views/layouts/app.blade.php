@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'HRMS - Human Resource Management System')</title>
+    <title>@yield('title', 'StaffIQ - Human Resource Management System')</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -71,6 +71,46 @@
             font-weight: 600;
             color: #495057;
         }
+
+        /* Custom Pagination Styles */
+        .pagination {
+            margin-bottom: 0;
+        }
+
+        .pagination .page-link {
+            border: 1px solid #dee2e6;
+            color: #6c757d;
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            transition: all 0.2s ease-in-out;StaffIQ
+        }
+
+        .pagination .page-link:hover {
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+            color: #495057;
+        }
+
+        .pagination .page-item.active .page-link {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: white;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+        }
+
+        .pagination .page-link:focus {
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .pagination-sm .page-link {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
     </style>
     @yield('styles')
 </head>
@@ -95,7 +135,7 @@
                         </li>
 
                         @if(auth()->user()->isHr() || auth()->user()->isManager())
-                                                <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('web.departments*') ? 'active' : '' }}" href="{{ route('web.departments.index') }}">
                                 <i class="fas fa-building"></i>
                                 Departments
@@ -110,11 +150,21 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('leaves*') ? 'active' : '' }}" href="{{ route('leaves.index') }}">
+                                <i class="fas fa-calendar-alt"></i>
+                                Leave Management
+                            </a>
+                        </li>
+                        @endif
+
+                        @if(auth()->user()->isHr() || auth()->user()->isManager())
+                        <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('web.offer-letters*') ? 'active' : '' }}" href="{{ route('web.offer-letters.index') }}">
                                 <i class="fas fa-file-contract"></i>
                                 Offer Letters
                             </a>
                         </li>
+                        @endif
 
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('web.payrolls*') ? 'active' : '' }}" href="{{ route('web.payrolls.index') }}">
@@ -122,13 +172,23 @@
                                 Payroll
                             </a>
                         </li>
+
+
+
+                        @if(auth()->user()->isHr() || auth()->user()->isManager())
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('reports*') ? 'active' : '' }}" href="{{ route('reports.index') }}">
+                                <i class="fas fa-chart-bar"></i>
+                                Reports
+                            </a>
+                        </li>
                         @endif
 
-                                                @if(auth()->user()->isManager())
+                        @if(auth()->user()->isManager())
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('web.manager.approvals') ? 'active' : '' }}" href="{{ route('web.manager.approvals') }}">
+                            <a class="nav-link {{ request()->routeIs('leaves.manager-approval') ? 'active' : '' }}" href="{{ route('leaves.manager-approval') }}">
                                 <i class="fas fa-check-circle"></i>
-                                Approvals
+                                Leave Approvals
                             </a>
                         </li>
                         @endif
@@ -145,6 +205,22 @@
                             <a class="nav-link {{ request()->routeIs('web.employee.payrolls') ? 'active' : '' }}" href="{{ route('web.employee.payrolls') }}">
                                 <i class="fas fa-money-bill"></i>
                                 My Payrolls
+                            </a>
+                        </li>
+                        @endif
+
+                        @if(auth()->user()->isHr() || auth()->user()->isManager())
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('my.profile') ? 'active' : '' }}" href="{{ route('my.profile') }}">
+                                <i class="fas fa-user"></i>
+                                My Profile
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('my.leaves') ? 'active' : '' }}" href="{{ route('my.leaves') }}">
+                                <i class="fas fa-calendar-alt"></i>
+                                My Leaves
                             </a>
                         </li>
                         @endif

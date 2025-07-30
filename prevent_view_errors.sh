@@ -34,7 +34,7 @@ echo "Creating error handling views..."
 
 cat > resources/views/errors/404.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Page Not Found - HRMS')
+@section('title', 'Page Not Found - StaffIQ')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -53,7 +53,7 @@ EOF
 
 cat > resources/views/errors/500.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Server Error - HRMS')
+@section('title', 'Server Error - StaffIQ')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -72,7 +72,7 @@ EOF
 
 cat > resources/views/errors/database.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'Database Error - HRMS')
+@section('title', 'Database Error - StaffIQ')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -180,7 +180,7 @@ class ViewHelper
         return <<<HTML
 @extends('layouts.app')
 
-@section('title', '{$title} - HRMS')
+@section('title', '{$title} - StaffIQ')
 
 @section('page-title', '{$title}')
 
@@ -240,7 +240,7 @@ print_status "View helper created"
 # Create a view not found error page
 cat > resources/views/errors/view-not-found.blade.php << 'EOF'
 @extends('layouts.app')
-@section('title', 'View Not Found - HRMS')
+@section('title', 'View Not Found - StaffIQ')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

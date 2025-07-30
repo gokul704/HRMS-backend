@@ -152,4 +152,4 @@ tail -f storage/logs/laravel.log
 3. **Monitor logs** - Check for any view creation events
 4. **Extend to other controllers** - Apply the same pattern to other controllers
 
-**Your HRMS application is now bulletproof against view-related 500 errors!** 🛡️ 
+**Your StaffIQ application is now bulletproof against view-related 500 errors!** 🛡️ 

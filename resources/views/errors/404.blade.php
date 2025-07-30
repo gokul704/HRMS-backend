@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Page Not Found - HRMS')
+@section('title', 'Page Not Found - StaffIQ')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

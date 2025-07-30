@@ -42,6 +42,10 @@ class OfferLetterController extends BaseController
      */
     public function create()
     {
+        if (!auth()->user()->isHr()) {
+            return back()->with('error', 'Only HR can create offer letters.');
+        }
+
         $departments = Department::where('is_active', true)->get();
         return $this->safeView('offer-letters.create', compact('departments'));
     }
@@ -51,23 +55,32 @@ class OfferLetterController extends BaseController
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->isHr()) {
+            return back()->with('error', 'Only HR can create offer letters.');
+        }
+
         $request->validate([
             'candidate_name' => 'required|string|max:255',
             'candidate_email' => 'required|email',
-            'candidate_phone' => 'required|string|max:20',
+            'candidate_phone' => 'nullable|string|max:20',
             'department_id' => 'required|exists:departments,id',
             'position' => 'required|string|max:255',
-            'salary' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'offer_terms' => 'nullable|string',
-            'status' => 'required|in:draft,sent,accepted,rejected',
+            'offered_salary' => 'required|numeric|min:0',
+            'offer_date' => 'required|date',
+            'joining_date' => 'required|date|after:offer_date',
+            'job_description' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'terms_and_conditions' => 'nullable|string',
         ]);
 
-        $request->merge(['created_by' => auth()->id()]);
+        $data = $request->all();
+        $data['created_by'] = auth()->id();
+        $data['status'] = 'draft';
+        $data['salary_currency'] = 'INR';
 
-        OfferLetter::create($request->all());
+        OfferLetter::create($data);
 
-        return redirect()->route('offer-letters.index')
+        return redirect()->route('web.offer-letters.index')
             ->with('success', 'Offer letter created successfully!');
     }
 
@@ -85,6 +98,10 @@ class OfferLetterController extends BaseController
      */
     public function edit(OfferLetter $offerLetter)
     {
+        if (!auth()->user()->isHr()) {
+            return back()->with('error', 'Only HR can edit offer letters.');
+        }
+
         $departments = Department::where('is_active', true)->get();
         return $this->safeView('offer-letters.edit', compact('offerLetter', 'departments'));
     }
@@ -94,21 +111,27 @@ class OfferLetterController extends BaseController
      */
     public function update(Request $request, OfferLetter $offerLetter)
     {
+        if (!auth()->user()->isHr()) {
+            return back()->with('error', 'Only HR can update offer letters.');
+        }
+
         $request->validate([
             'candidate_name' => 'required|string|max:255',
             'candidate_email' => 'required|email',
-            'candidate_phone' => 'required|string|max:20',
+            'candidate_phone' => 'nullable|string|max:20',
             'department_id' => 'required|exists:departments,id',
             'position' => 'required|string|max:255',
-            'salary' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'offer_terms' => 'nullable|string',
-            'status' => 'required|in:draft,sent,accepted,rejected',
+            'offered_salary' => 'required|numeric|min:0',
+            'offer_date' => 'required|date',
+            'joining_date' => 'required|date|after:offer_date',
+            'job_description' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'terms_and_conditions' => 'nullable|string',
         ]);
 
         $offerLetter->update($request->all());
 
-        return redirect()->route('offer-letters.index')
+        return redirect()->route('web.offer-letters.index')
             ->with('success', 'Offer letter updated successfully!');
     }
 
@@ -117,9 +140,13 @@ class OfferLetterController extends BaseController
      */
     public function destroy(OfferLetter $offerLetter)
     {
+        if (!auth()->user()->isHr()) {
+            return back()->with('error', 'Only HR can delete offer letters.');
+        }
+
         $offerLetter->delete();
 
-        return redirect()->route('offer-letters.index')
+        return redirect()->route('web.offer-letters.index')
             ->with('success', 'Offer letter deleted successfully!');
     }
 
@@ -128,6 +155,10 @@ class OfferLetterController extends BaseController
      */
     public function send(OfferLetter $offerLetter)
     {
+        if (!auth()->user()->isHr()) {
+            return back()->with('error', 'Only HR can send offer letters.');
+        }
+
         if ($offerLetter->status !== 'draft') {
             return back()->with('error', 'Only draft offer letters can be sent.');
         }
@@ -142,8 +173,8 @@ class OfferLetterController extends BaseController
      */
     public function approve(OfferLetter $offerLetter)
     {
-        if (!auth()->user()->isManager()) {
-            return back()->with('error', 'Only managers can approve offer letters.');
+        if (!auth()->user()->isHr() && !auth()->user()->isManager()) {
+            return back()->with('error', 'Only HR and managers can approve offer letters.');
         }
 
         $offerLetter->update([
@@ -160,6 +191,10 @@ class OfferLetterController extends BaseController
      */
     public function updateStatus(Request $request, OfferLetter $offerLetter)
     {
+        if (!auth()->user()->isHr()) {
+            return back()->with('error', 'Only HR can update offer letter status.');
+        }
+
         $request->validate([
             'status' => 'required|in:draft,sent,accepted,rejected',
         ]);

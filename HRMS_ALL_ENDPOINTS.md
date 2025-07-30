@@ -1,4 +1,4 @@
-# HRMS API Endpoints - Complete Reference
+# StaffIQ API Endpoints - Complete Reference
 
 ## Base URL
 ```

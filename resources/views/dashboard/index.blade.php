@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard - HRMS')
+@section('title', 'Dashboard - StaffIQ')
 
 @section('page-title', 'Dashboard')
 
@@ -160,12 +160,14 @@
                             Add Department
                         </a>
                     </div>
+                    @if(auth()->user()->isHr())
                     <div class="col-md-3 mb-3">
                         <a href="{{ route('web.offer-letters.create') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-file-contract me-2"></i>
                             Create Offer
                         </a>
                     </div>
+                    @endif
                     <div class="col-md-3 mb-3">
                         <a href="{{ route('web.payrolls.create') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-money-bill me-2"></i>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Employee Payrolls - HRMS')
+@section('title', 'Employee Payrolls - StaffIQ')
 @section('page-title', 'Payrolls for {{ $employee->name }}')
 @section('content')
 <div class="card">
@@ -23,11 +23,16 @@
                         @foreach($payrolls as $payroll)
                         <tr>
                             <td>{{ $payroll->month }}/{{ $payroll->year }}</td>
-                            <td>${{ number_format($payroll->basic_salary, 2) }}</td>
-                            <td>${{ number_format($payroll->net_salary, 2) }}</td>
+                            <td>₹{{ number_format($payroll->basic_salary, 2) }}</td>
+<td>₹{{ number_format($payroll->net_salary, 2) }}</td>
                             <td>{{ ucfirst($payroll->status) }}</td>
                             <td>
                                 <a href="{{ route('web.payrolls.show', $payroll) }}" class="btn btn-sm btn-primary">View</a>
+                                <a href="{{ route('web.payrolls.download-payslip', $payroll) }}"
+                                   class="btn btn-sm btn-success"
+                                   title="Download Payslip">
+                                    <i class="fas fa-download"></i>
+                                </a>
                             </td>
                         </tr>
                         @endforeach

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Generate Payroll - HRMS')
+@section('title', 'Generate Payroll - StaffIQ')
 
 @section('page-title', 'Generate Payroll')
 
@@ -66,9 +66,9 @@
 
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="basic_salary" class="form-label">Basic Salary</label>
+                        <label for="basic_salary" class="form-label">Basic Salary (₹)</label>
                         <div class="input-group">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">₹</span>
                             <input type="number" name="basic_salary" id="basic_salary" class="form-control @error('basic_salary') is-invalid @enderror"
                                    value="{{ old('basic_salary') }}" step="0.01" min="0" required>
                         </div>
@@ -82,9 +82,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="allowances" class="form-label">Allowances</label>
+                        <label for="allowances" class="form-label">Allowances (₹)</label>
                         <div class="input-group">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">₹</span>
                             <input type="number" name="allowances" id="allowances" class="form-control @error('allowances') is-invalid @enderror"
                                    value="{{ old('allowances', 0) }}" step="0.01" min="0">
                         </div>
@@ -96,9 +96,9 @@
 
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="deductions" class="form-label">Deductions</label>
+                        <label for="deductions" class="form-label">Deductions (₹)</label>
                         <div class="input-group">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">₹</span>
                             <input type="number" name="deductions" id="deductions" class="form-control @error('deductions') is-invalid @enderror"
                                    value="{{ old('deductions', 0) }}" step="0.01" min="0">
                         </div>

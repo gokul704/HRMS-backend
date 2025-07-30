@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Payroll Statistics - HRMS')
+@section('title', 'Payroll Statistics - StaffIQ')
 @section('page-title', 'Payroll Statistics')
 @section('content')
 <div class="card">

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('position');
             $table->foreignId('department_id')->constrained()->onDelete('cascade');
             $table->decimal('offered_salary', 10, 2);
-            $table->string('salary_currency')->default('USD');
+            $table->string('salary_currency')->default('INR');
             $table->date('offer_date');
             $table->date('joining_date');
             $table->text('job_description')->nullable();

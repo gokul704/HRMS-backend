@@ -1,14 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Offer Letters - HRMS')
+@section('title', 'Offer Letters - StaffIQ')
 
 @section('page-title', 'Offer Letters')
 
 @section('page-actions')
+@if(auth()->user()->isHr())
 <a href="{{ route('web.offer-letters.create') }}" class="btn btn-primary">
     <i class="fas fa-plus me-2"></i>
     Create Offer Letter
 </a>
+@endif
 @endsection
 
 @section('content')
@@ -38,16 +40,9 @@
                         @foreach($offerLetters as $offerLetter)
                         <tr>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar-sm me-3">
-                                        <div class="avatar-title bg-light rounded-circle">
-                                            <i class="fas fa-user"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0">{{ $offerLetter->candidate_name }}</h6>
-                                        <small class="text-muted">{{ $offerLetter->candidate_email }}</small>
-                                    </div>
+                                <div>
+                                    <h6 class="mb-0">{{ $offerLetter->candidate_name }}</h6>
+                                    <small class="text-muted">{{ $offerLetter->candidate_email }}</small>
                                 </div>
                             </td>
                             <td>
@@ -57,7 +52,7 @@
                                 {{ $offerLetter->department->name ?? 'N/A' }}
                             </td>
                             <td>
-                                <span class="text-success">${{ number_format($offerLetter->salary, 2) }}</span>
+                                <span class="text-success">₹{{ number_format($offerLetter->salary, 2) }}</span>
                             </td>
                             <td>
                                 @if($offerLetter->status === 'draft')
@@ -84,6 +79,7 @@
                                        title="View">
                                         <i class="fas fa-eye"></i>
                                     </a>
+                                    @if(auth()->user()->isHr())
                                     <a href="{{ route('web.offer-letters.edit', $offerLetter) }}"
                                        class="btn btn-sm btn-outline-warning"
                                        title="Edit">
@@ -100,7 +96,17 @@
                                             </button>
                                         </form>
                                     @endif
-                                    @if($offerLetter->status === 'sent')
+                                    <form method="POST" action="{{ route('web.offer-letters.destroy', $offerLetter) }}"
+                                          class="d-inline"
+                                          onsubmit="return confirm('Are you sure you want to delete this offer letter?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    @endif
+                                    @if(auth()->user()->isManager() && $offerLetter->status === 'sent')
                                         <form method="POST" action="{{ route('web.offer-letters.approve', $offerLetter) }}"
                                               class="d-inline">
                                             @csrf
@@ -111,15 +117,6 @@
                                             </button>
                                         </form>
                                     @endif
-                                    <form method="POST" action="{{ route('web.offer-letters.destroy', $offerLetter) }}"
-                                          class="d-inline"
-                                          onsubmit="return confirm('Are you sure you want to delete this offer letter?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -137,11 +134,19 @@
             <div class="text-center py-5">
                 <i class="fas fa-file-contract fa-3x text-muted mb-3"></i>
                 <h5 class="text-muted">No Offer Letters Found</h5>
-                <p class="text-muted">Get started by creating your first offer letter.</p>
+                <p class="text-muted">
+                    @if(auth()->user()->isHr())
+                        Get started by creating your first offer letter.
+                    @else
+                        No offer letters are available at the moment.
+                    @endif
+                </p>
+                @if(auth()->user()->isHr())
                 <a href="{{ route('web.offer-letters.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus me-2"></i>
                     Create Offer Letter
                 </a>
+                @endif
             </div>
         @endif
     </div>

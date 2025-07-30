@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# HRMS Backend Production Deployment Script
+# StaffIQ Backend Production Deployment Script
 # Usage: ./deploy.sh
 
 set -e  # Exit on any error
 
-echo "🚀 Starting HRMS Backend Deployment..."
+echo "🚀 Starting StaffIQ Backend Deployment..."
 
 # Colors for output
 RED='\033[0;31m'
